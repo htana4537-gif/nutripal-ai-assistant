@@ -1,4 +1,72 @@
-# دليل بناء n8n Workflow لمساعد التغذية الذكي
+# Building an Intelligent Nutrition Assistant with n8n, Telegram, and Supabase
+
+This guide will walk you through creating a comprehensive n8n workflow that powers an intelligent nutrition assistant integrated with Telegram and a Supabase database.
+
+## 🚀 Quick Start - Import Ready Workflow
+
+We've created a complete, ready-to-import n8n workflow JSON file that you can use immediately!
+
+### How to Import:
+
+1. **Download the workflow file**: `n8n-nutrition-workflow.json` (in the project root)
+
+2. **Open your n8n instance** and go to the Workflows page
+
+3. **Click "Import from File"** button (top right)
+
+4. **Select** the `n8n-nutrition-workflow.json` file
+
+5. **Configure credentials** (see below)
+
+### Required Credentials Setup:
+
+After importing, you need to configure these credentials in n8n:
+
+#### 1. Telegram Bot API
+- **Name**: `Telegram Bot API`
+- **Token**: Your Telegram Bot Token from [@BotFather](https://t.me/botfather)
+- How to get: Message @BotFather → `/newbot` → Follow instructions
+
+#### 2. Supabase API
+- **Name**: `Supabase API`
+- **Host**: Your Supabase URL (format: `https://your-project.supabase.co`)
+- **Service Role Key**: Your Supabase service role key (found in project settings)
+
+#### 3. Supabase Auth Header
+- **Name**: `Supabase Auth Header`
+- **Header Name**: `Authorization`
+- **Header Value**: `Bearer YOUR_SUPABASE_ANON_KEY`
+
+### Environment Variables:
+
+Make sure to set this environment variable in n8n:
+```
+SUPABASE_URL=https://your-project.supabase.co
+```
+
+### ✅ What's Included:
+
+The imported workflow includes:
+- ✅ Telegram message trigger
+- ✅ User management (new user creation)
+- ✅ Conversation tracking
+- ✅ Message routing (text/image/voice)
+- ✅ AI processing via Lovable AI Edge Functions
+- ✅ Response saving to database
+- ✅ Daily check-in cron job
+
+### 📡 Edge Functions:
+
+The workflow calls these Edge Functions (already created in your Lovable project):
+- `process-nutrition-text` - Handles text-based nutrition questions
+- `analyze-food-image` - Analyzes food photos for calorie counting
+- `process-voice` - Processes voice messages
+- `generate-meal-plan` - Creates personalized meal plans
+- `daily-checkin` - Sends daily motivational messages
+
+These functions are deployed automatically and use **Lovable AI** (no API keys needed)!
+
+---
 
 ## نظرة عامة
 هذا الدليل يشرح كيفية بناء workflow في n8n ليكون بمثابة مساعد ذكي للتغذية متكامل مع Telegram والذي يتكامل مع قاعدة البيانات الخاصة بك.
