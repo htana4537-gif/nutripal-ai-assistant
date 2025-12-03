@@ -70,9 +70,11 @@ const Login = () => {
     <div className="min-h-screen liquid-bg bg-gradient-bg flex items-center justify-center p-4" dir="rtl">
       {/* Floating decorative elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 right-20 w-32 h-32 rounded-full bg-primary/20 blur-3xl animate-pulse" />
-        <div className="absolute bottom-32 left-20 w-40 h-40 rounded-full bg-secondary/20 blur-3xl animate-pulse delay-1000" />
-        <div className="absolute top-1/2 right-1/3 w-24 h-24 rounded-full bg-accent/15 blur-2xl animate-pulse delay-500" />
+        <div className="absolute top-20 right-20 w-32 h-32 rounded-full bg-primary/20 blur-3xl float" style={{ animationDelay: '0s' }} />
+        <div className="absolute bottom-32 left-20 w-40 h-40 rounded-full bg-secondary/20 blur-3xl float" style={{ animationDelay: '1s' }} />
+        <div className="absolute top-1/2 right-1/3 w-24 h-24 rounded-full bg-accent/15 blur-2xl float" style={{ animationDelay: '0.5s' }} />
+        <div className="absolute top-40 left-1/4 w-20 h-20 rounded-full bg-primary/15 blur-2xl float" style={{ animationDelay: '1.5s' }} />
+        <div className="absolute bottom-1/4 right-1/4 w-28 h-28 rounded-full bg-secondary/15 blur-2xl float" style={{ animationDelay: '2s' }} />
       </div>
 
       {/* Main content */}
@@ -103,9 +105,10 @@ const Login = () => {
             ].map((feature, index) => (
               <div
                 key={index}
-                className="glass-card p-4 flex items-center gap-4 transition-all duration-300 hover:scale-[1.02] hover:glow-green"
+                className="glass-card p-4 flex items-center gap-4 ripple shimmer cursor-pointer"
+                style={{ animationDelay: `${index * 100}ms` }}
               >
-                <div className="p-2 rounded-xl bg-gradient-primary">
+                <div className="p-2 rounded-xl bg-gradient-primary hover-scale icon-spin">
                   <feature.icon className="h-5 w-5 text-primary-foreground" />
                 </div>
                 <span className="font-medium text-foreground">{feature.text}</span>
@@ -120,7 +123,11 @@ const Login = () => {
               { value: "98%", label: "رضا العملاء" },
               { value: "24/7", label: "دعم متواصل" },
             ].map((stat, index) => (
-              <div key={index} className="glass-card p-4 text-center">
+              <div 
+                key={index} 
+                className="glass-card p-4 text-center hover-scale pulse-scale"
+                style={{ animationDelay: `${index * 150}ms` }}
+              >
                 <div className="text-2xl font-bold gradient-text-yellow">{stat.value}</div>
                 <div className="text-xs text-muted-foreground">{stat.label}</div>
               </div>
@@ -200,7 +207,7 @@ const Login = () => {
             <Button
               type="submit"
               disabled={loading}
-              className="w-full h-12 rounded-xl bg-gradient-primary text-primary-foreground font-semibold text-lg transition-all duration-300 hover:scale-[1.02] hover:shadow-glow glow-green"
+              className="w-full h-12 rounded-xl bg-gradient-primary text-primary-foreground font-semibold text-lg btn-hover-lift ripple"
             >
               {loading ? (
                 <>
