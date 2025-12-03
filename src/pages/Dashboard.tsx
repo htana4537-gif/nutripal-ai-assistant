@@ -4,8 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import DashboardLayout from "@/components/DashboardLayout";
 import StatsCard from "@/components/StatsCard";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Users, MessageSquare, Activity, TrendingUp, Calendar, LogOut } from "lucide-react";
+import { Users, MessageSquare, Activity, TrendingUp, Calendar, LogOut, Sparkles, Zap } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 const Dashboard = () => {
@@ -66,7 +65,7 @@ const Dashboard = () => {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gradient-bg">
+      <div className="flex min-h-screen items-center justify-center liquid-bg bg-gradient-bg">
         <div className="text-center">
           <div className="h-12 w-12 animate-spin rounded-full border-4 border-primary border-t-transparent mx-auto" />
           <p className="mt-4 text-muted-foreground">جاري التحميل...</p>
@@ -81,7 +80,7 @@ const Dashboard = () => {
         {/* Header */}
         <div className="mb-8 flex items-center justify-between">
           <div>
-            <h1 className="text-4xl font-bold text-foreground">لوحة التحكم</h1>
+            <h1 className="text-4xl font-bold gradient-text">لوحة التحكم</h1>
             <p className="mt-2 text-lg text-muted-foreground">
               مرحباً بك في نظام إدارة مساعد التغذية الذكي
             </p>
@@ -89,7 +88,7 @@ const Dashboard = () => {
           <Button
             onClick={handleLogout}
             variant="outline"
-            className="gap-2 transition-all duration-200 hover:shadow-soft"
+            className="gap-2 glass border-border/50 hover:bg-destructive/20 hover:text-destructive hover:border-destructive/50 transition-all duration-300"
           >
             <LogOut className="h-4 w-4" />
             تسجيل الخروج
@@ -132,75 +131,92 @@ const Dashboard = () => {
         <div className="mb-8">
           <h2 className="mb-4 text-2xl font-bold text-foreground">إجراءات سريعة</h2>
           <div className="grid gap-4 md:grid-cols-3">
-            <Card className="border-none p-6 shadow-soft transition-all duration-300 hover:shadow-medium cursor-pointer" onClick={() => navigate("/clients")}>
+            <div 
+              className="glass-card p-6 transition-all duration-300 hover:scale-[1.02] hover:glow-green cursor-pointer group" 
+              onClick={() => navigate("/clients")}
+            >
               <div className="flex items-center gap-4">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-primary">
-                  <Users className="h-6 w-6 text-white" />
+                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-primary transition-transform duration-300 group-hover:scale-110">
+                  <Users className="h-7 w-7 text-primary-foreground" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-foreground">إدارة العملاء</h3>
+                  <h3 className="font-semibold text-foreground text-lg">إدارة العملاء</h3>
                   <p className="text-sm text-muted-foreground">عرض وإدارة جميع العملاء</p>
                 </div>
               </div>
-            </Card>
+            </div>
 
-            <Card className="border-none p-6 shadow-soft transition-all duration-300 hover:shadow-medium cursor-pointer" onClick={() => navigate("/conversations")}>
+            <div 
+              className="glass-card p-6 transition-all duration-300 hover:scale-[1.02] hover:glow-yellow cursor-pointer group" 
+              onClick={() => navigate("/conversations")}
+            >
               <div className="flex items-center gap-4">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-accent">
-                  <MessageSquare className="h-6 w-6 text-white" />
+                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-secondary transition-transform duration-300 group-hover:scale-110">
+                  <MessageSquare className="h-7 w-7 text-secondary-foreground" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-foreground">المحادثات</h3>
+                  <h3 className="font-semibold text-foreground text-lg">المحادثات</h3>
                   <p className="text-sm text-muted-foreground">متابعة المحادثات مع العملاء</p>
                 </div>
               </div>
-            </Card>
+            </div>
 
-            <Card className="border-none p-6 shadow-soft transition-all duration-300 hover:shadow-medium cursor-pointer" onClick={() => navigate("/meal-plans")}>
+            <div 
+              className="glass-card p-6 transition-all duration-300 hover:scale-[1.02] hover:glow-green cursor-pointer group" 
+              onClick={() => navigate("/meal-plans")}
+            >
               <div className="flex items-center gap-4">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-secondary">
-                  <TrendingUp className="h-6 w-6 text-white" />
+                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-accent transition-transform duration-300 group-hover:scale-110">
+                  <TrendingUp className="h-7 w-7 text-accent-foreground" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-foreground">الخطط الغذائية</h3>
+                  <h3 className="font-semibold text-foreground text-lg">الخطط الغذائية</h3>
                   <p className="text-sm text-muted-foreground">إنشاء ومتابعة الخطط</p>
                 </div>
               </div>
-            </Card>
+            </div>
           </div>
         </div>
 
         {/* Info Card */}
-        <Card className="border-none bg-gradient-to-br from-primary/10 to-accent/10 p-6 shadow-soft">
-          <div className="flex items-start gap-4">
-            <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-primary">
-              <TrendingUp className="h-6 w-6 text-white" />
+        <div className="glass-card p-6 relative overflow-hidden">
+          {/* Decorative gradient */}
+          <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-primary/20 to-transparent rounded-full blur-3xl" />
+          <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-secondary/20 to-transparent rounded-full blur-3xl" />
+          
+          <div className="relative flex items-start gap-4">
+            <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-2xl bg-gradient-primary glow-green">
+              <Zap className="h-7 w-7 text-primary-foreground" />
             </div>
-            <div>
-              <h3 className="text-lg font-semibold text-foreground">
+            <div className="flex-1">
+              <h3 className="text-xl font-bold gradient-text">
                 نظام متكامل مدعوم بالذكاء الاصطناعي
               </h3>
-              <p className="mt-2 text-muted-foreground">
+              <p className="mt-3 text-muted-foreground leading-relaxed">
                 يتيح لك هذا النظام إدارة عملائك بكفاءة، متابعة تقدمهم، وتقديم خطط غذائية وتمارين
                 مخصصة. النظام متصل بـ Telegram للتواصل التلقائي مع العملاء وتقديم الدعم الفوري.
               </p>
               <div className="mt-4 flex flex-wrap gap-2">
-                <span className="rounded-full bg-primary/20 px-3 py-1 text-xs font-medium text-primary">
-                  إدارة العملاء
-                </span>
-                <span className="rounded-full bg-accent/20 px-3 py-1 text-xs font-medium text-accent">
-                  خطط غذائية
-                </span>
-                <span className="rounded-full bg-secondary/20 px-3 py-1 text-xs font-medium text-secondary">
-                  تمارين رياضية
-                </span>
-                <span className="rounded-full bg-success/20 px-3 py-1 text-xs font-medium text-success">
-                  تحليلات ذكية
-                </span>
+                {[
+                  { label: "إدارة العملاء", color: "bg-primary/20 text-primary" },
+                  { label: "خطط غذائية", color: "bg-accent/20 text-accent" },
+                  { label: "تمارين رياضية", color: "bg-secondary/20 text-secondary" },
+                  { label: "تحليلات ذكية", color: "bg-success/20 text-success" },
+                ].map((tag) => (
+                  <span
+                    key={tag.label}
+                    className={`glass rounded-full px-4 py-1.5 text-xs font-medium ${tag.color}`}
+                  >
+                    {tag.label}
+                  </span>
+                ))}
               </div>
             </div>
+            <div className="hidden lg:block">
+              <Sparkles className="h-8 w-8 text-secondary animate-pulse" />
+            </div>
           </div>
-        </Card>
+        </div>
       </div>
     </DashboardLayout>
   );

@@ -1,68 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Liquid Glass Design System - Green & Yellow Theme */
 
 @layer base {
   :root {
-    /* Modern Nutrition Dashboard Design System */
-    --background: 0 0% 100%;
-    --foreground: 210 20% 12%;
+    /* Background - Dark gradient for glass effect contrast */
+    --background: 160 30% 8%;
+    --foreground: 60 10% 95%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 210 20% 12%;
+    /* Card - Glass effect base */
+    --card: 160 20% 12%;
+    --card-foreground: 60 10% 95%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 210 20% 12%;
+    --popover: 160 20% 12%;
+    --popover-foreground: 60 10% 95%;
 
-    /* Vibrant green for health & growth */
-    --primary: 142 76% 36%;
+    /* Primary - Vibrant Green */
+    --primary: 142 70% 45%;
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 142 76% 55%;
+    --primary-glow: 142 80% 55%;
 
-    /* Warm orange for motivation */
-    --secondary: 24 95% 53%;
-    --secondary-foreground: 0 0% 100%;
+    /* Secondary - Golden Yellow */
+    --secondary: 45 95% 55%;
+    --secondary-foreground: 160 30% 8%;
 
-    /* Soft backgrounds */
-    --muted: 142 20% 96%;
-    --muted-foreground: 210 20% 45%;
+    /* Muted - Subtle dark tones */
+    --muted: 160 20% 15%;
+    --muted-foreground: 160 10% 60%;
 
-    /* Accent blue for calm elements */
-    --accent: 207 90% 54%;
-    --accent-foreground: 0 0% 100%;
+    /* Accent - Lime green */
+    --accent: 80 70% 50%;
+    --accent-foreground: 160 30% 8%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    /* Success green */
-    --success: 142 76% 36%;
+    /* Success - Bright green */
+    --success: 142 70% 45%;
     --success-foreground: 0 0% 100%;
 
-    /* Warning yellow */
-    --warning: 45 93% 47%;
-    --warning-foreground: 210 20% 12%;
+    /* Warning - Amber */
+    --warning: 45 95% 55%;
+    --warning-foreground: 160 30% 8%;
 
-    --border: 142 20% 90%;
-    --input: 142 20% 90%;
-    --ring: 142 76% 36%;
+    --border: 160 20% 20%;
+    --input: 160 20% 18%;
+    --ring: 142 70% 45%;
 
-    --radius: 0.75rem;
+    --radius: 1rem;
 
-    /* Beautiful gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(142 76% 36%), hsl(142 76% 55%));
-    --gradient-secondary: linear-gradient(135deg, hsl(24 95% 53%), hsl(24 95% 65%));
-    --gradient-accent: linear-gradient(135deg, hsl(207 90% 54%), hsl(207 90% 70%));
-    --gradient-bg: linear-gradient(180deg, hsl(142 20% 99%), hsl(142 20% 96%));
+    /* Liquid Glass Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(142 70% 45%), hsl(80 70% 50%));
+    --gradient-secondary: linear-gradient(135deg, hsl(45 95% 55%), hsl(35 95% 60%));
+    --gradient-accent: linear-gradient(135deg, hsl(80 70% 50%), hsl(142 70% 45%));
+    --gradient-bg: linear-gradient(180deg, hsl(160 30% 6%), hsl(160 30% 12%));
+    
+    /* Liquid blob gradients */
+    --gradient-blob-1: radial-gradient(ellipse at 30% 20%, hsl(142 70% 45% / 0.4) 0%, transparent 50%);
+    --gradient-blob-2: radial-gradient(ellipse at 70% 60%, hsl(45 95% 55% / 0.3) 0%, transparent 50%);
+    --gradient-blob-3: radial-gradient(ellipse at 50% 80%, hsl(80 70% 50% / 0.25) 0%, transparent 50%);
+
+    /* Glass effects */
+    --glass-bg: hsl(160 20% 12% / 0.6);
+    --glass-border: hsl(160 20% 30% / 0.3);
+    --glass-shadow: 0 8px 32px hsl(0 0% 0% / 0.3);
+    --glass-blur: 20px;
 
     /* Elegant shadows */
-    --shadow-soft: 0 2px 8px hsl(142 20% 20% / 0.08);
-    --shadow-medium: 0 4px 16px hsl(142 20% 20% / 0.12);
-    --shadow-strong: 0 8px 32px hsl(142 20% 20% / 0.16);
-    --shadow-glow: 0 0 32px hsl(142 76% 55% / 0.3);
+    --shadow-soft: 0 4px 16px hsl(0 0% 0% / 0.2);
+    --shadow-medium: 0 8px 32px hsl(0 0% 0% / 0.3);
+    --shadow-strong: 0 16px 48px hsl(0 0% 0% / 0.4);
+    --shadow-glow: 0 0 40px hsl(142 70% 45% / 0.3);
+    --shadow-glow-yellow: 0 0 40px hsl(45 95% 55% / 0.3);
 
     /* Animations */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -77,5 +90,129 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    font-family: 'Outfit', system-ui, sans-serif;
   }
+}
+
+/* Glass Card Utility Classes */
+@layer components {
+  .glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+  }
+
+  .glass-strong {
+    background: hsl(160 20% 12% / 0.8);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border: 1px solid hsl(160 20% 35% / 0.4);
+    box-shadow: var(--shadow-medium);
+  }
+
+  .glass-card {
+    @apply glass rounded-2xl;
+  }
+
+  .glass-button {
+    @apply glass rounded-xl px-6 py-3 font-medium transition-all duration-300;
+    @apply hover:bg-primary/20 hover:border-primary/50;
+  }
+
+  /* Liquid background blobs */
+  .liquid-bg {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .liquid-bg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+      var(--gradient-blob-1),
+      var(--gradient-blob-2),
+      var(--gradient-blob-3);
+    animation: liquid-move 15s ease-in-out infinite;
+    z-index: 0;
+  }
+
+  @keyframes liquid-move {
+    0%, 100% {
+      transform: translate(0, 0) scale(1);
+    }
+    25% {
+      transform: translate(5%, 5%) scale(1.05);
+    }
+    50% {
+      transform: translate(-3%, 8%) scale(0.98);
+    }
+    75% {
+      transform: translate(3%, -5%) scale(1.02);
+    }
+  }
+
+  /* Glow effects */
+  .glow-green {
+    box-shadow: var(--shadow-glow);
+  }
+
+  .glow-yellow {
+    box-shadow: var(--shadow-glow-yellow);
+  }
+
+  /* Gradient text */
+  .gradient-text {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .gradient-text-yellow {
+    background: var(--gradient-secondary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Animated border */
+  .animated-border {
+    position: relative;
+  }
+
+  .animated-border::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: var(--gradient-primary);
+    border-radius: inherit;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .animated-border:hover::before {
+    opacity: 1;
+  }
+}
+
+/* Custom scrollbar for glass theme */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(160 20% 10%);
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(160 20% 25%);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(142 70% 45%);
 }
