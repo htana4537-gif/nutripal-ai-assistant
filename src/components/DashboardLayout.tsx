@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { Users, MessageSquare, Utensils, Dumbbell, TrendingUp, HeadphonesIcon, Sparkles } from "lucide-react";
+import { Users, MessageSquare, Utensils, Dumbbell, TrendingUp, HeadphonesIcon, Sparkles, Bot, Activity } from "lucide-react";
 import { NavLink } from "./NavLink";
 
 interface DashboardLayoutProps {
@@ -13,6 +13,8 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
     { name: "المحادثات", href: "/conversations", icon: MessageSquare },
     { name: "الخطط الغذائية", href: "/meal-plans", icon: Utensils },
     { name: "خطط التمارين", href: "/workouts", icon: Dumbbell },
+    { name: "متابعة التقدم", href: "/progress", icon: Activity },
+    { name: "المساعد الذكي", href: "/ai-chat", icon: Bot },
     { name: "الدعم الفني", href: "/support", icon: HeadphonesIcon },
   ];
 
