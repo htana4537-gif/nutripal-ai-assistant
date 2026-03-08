@@ -5,10 +5,8 @@ import { Switch } from "@/components/ui/switch";
 import {
   Search, ShoppingCart, TrendingDown, Heart,
   Apple, Beef, Wheat, Milk, Coffee, Cookie, Leaf,
-  Sparkles, Droplets, Egg, Nut, Grain
+  Sparkles, Droplets, Check
 } from "lucide-react";
-import { FOODS, FOOD_CATEGORIES, type Food } from "@/data/foods";
-import { Check } from "lucide-react";
 
 const CATEGORY_ICONS: Record<string, any> = {
   all: Sparkles,
