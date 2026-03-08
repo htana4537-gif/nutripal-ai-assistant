@@ -168,23 +168,17 @@
       var(--gradient-blob-1),
       var(--gradient-blob-2),
       var(--gradient-blob-3);
-    animation: liquid-move 30s ease-in-out infinite;
+    animation: liquid-move 60s linear infinite;
     z-index: 0;
-    opacity: 0.8;
+    opacity: 0.6;
   }
 
   @keyframes liquid-move {
     0%, 100% {
-      transform: translate(0, 0) scale(1);
-      opacity: 0.8;
+      opacity: 0.6;
     }
-    33% {
-      transform: translate(1%, 1%) scale(1.01);
-      opacity: 0.9;
-    }
-    66% {
-      transform: translate(-1%, 1%) scale(0.99);
-      opacity: 0.85;
+    50% {
+      opacity: 0.75;
     }
   }
 
