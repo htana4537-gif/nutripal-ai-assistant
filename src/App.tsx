@@ -39,6 +39,7 @@ const App = () => (
           <Route path="/progress" element={<ProgressTracking />} />
           <Route path="/ai-chat" element={<AIChat />} />
           <Route path="/support" element={<Support />} />
+          <Route path="/store" element={<Store />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

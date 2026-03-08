@@ -17,6 +17,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
     { name: "اللياقة والصحة", href: "/fitness", icon: Heart },
     { name: "متابعة التقدم", href: "/progress", icon: Activity },
     { name: "المساعد الذكي", href: "/ai-chat", icon: Bot },
+    { name: "متجر المكملات", href: "/store", icon: ShoppingBag },
     { name: "الدعم الفني", href: "/support", icon: HeadphonesIcon },
   ];
 
