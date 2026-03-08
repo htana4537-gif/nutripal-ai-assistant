@@ -15,6 +15,7 @@ import ProgressTracking from "./pages/ProgressTracking";
 import Onboarding from "./pages/Onboarding";
 import NutritionHub from "./pages/NutritionHub";
 import FitnessHub from "./pages/FitnessHub";
+import Store from "./pages/Store";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
