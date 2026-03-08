@@ -175,15 +175,15 @@
   @keyframes liquid-move {
     0%, 100% {
       transform: translate(0, 0) scale(1);
+      opacity: 0.8;
     }
-    25% {
-      transform: translate(5%, 5%) scale(1.05);
+    33% {
+      transform: translate(1%, 1%) scale(1.01);
+      opacity: 0.9;
     }
-    50% {
-      transform: translate(-3%, 8%) scale(0.98);
-    }
-    75% {
-      transform: translate(3%, -5%) scale(1.02);
+    66% {
+      transform: translate(-1%, 1%) scale(0.99);
+      opacity: 0.85;
     }
   }
 
