@@ -44,8 +44,43 @@ const Onboarding = () => {
       navigate("/login");
       return;
     }
-    toast({ title: "تم!", description: "تم حفظ بياناتك بنجاح" });
-    navigate("/");
+
+    try {
+      // Save client data to database
+      const { error } = await supabase.from("clients").insert({
+        full_name: profile.name || session.user.email || "مستخدم جديد",
+        telegram_id: session.user.id,
+        age: profile.age,
+        gender: profile.gender,
+        height: profile.height,
+        weight: profile.weight,
+        activity_level: profile.activityLevel,
+        daily_calorie_goal: calculateCalories(),
+        target_weight: profile.goal === "Lose Weight" ? profile.weight - 10 : profile.goal === "Build Muscle" ? profile.weight + 5 : profile.weight,
+        dietary_preferences: profile.dietaryRestrictions ? profile.dietaryRestrictions.split(",").map((s: string) => s.trim()) : [],
+        health_conditions: [],
+        allergies: [],
+      });
+
+      if (error) throw error;
+
+      toast({ title: "تم!", description: "تم حفظ بياناتك بنجاح" });
+      navigate("/");
+    } catch (err: any) {
+      console.error("Error saving onboarding data:", err);
+      toast({ title: "خطأ", description: "فشل في حفظ البيانات. حاول مرة أخرى.", variant: "destructive" });
+    }
+  };
+
+  const calculateCalories = () => {
+    const bmr = profile.gender === "Male"
+      ? 10 * profile.weight + 6.25 * profile.height - 5 * profile.age + 5
+      : 10 * profile.weight + 6.25 * profile.height - 5 * profile.age - 161;
+    const multipliers: Record<string, number> = { "Sedentary": 1.2, "Lightly Active": 1.375, "Moderately Active": 1.55, "Very Active": 1.725 };
+    const tdee = bmr * (multipliers[profile.activityLevel] || 1.55);
+    if (profile.goal === "Lose Weight") return Math.round(tdee - 500);
+    if (profile.goal === "Build Muscle") return Math.round(tdee + 300);
+    return Math.round(tdee);
   };
 
   const next = () => (step < 5 ? setStep(step + 1) : handleFinish());
