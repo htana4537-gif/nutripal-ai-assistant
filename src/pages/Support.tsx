@@ -30,7 +30,7 @@ const Support = () => {
     try {
       const { data, error } = await supabase.from("support_tickets").select(`*, client:clients(full_name)`).order("created_at", { ascending: false });
       if (error) throw error;
-      setTickets(data || []);
+      setTickets((data as any) || []);
     } catch (error) { toast({ title: "خطأ", description: "فشل في تحميل التذاكر", variant: "destructive" }); } finally { setLoading(false); }
   };
 

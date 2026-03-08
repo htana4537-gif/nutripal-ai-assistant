@@ -66,7 +66,7 @@ const Clients = () => {
         .order("created_at", { ascending: false });
 
       if (error) throw error;
-      setClients(data || []);
+      setClients((data as any) || []);
     } catch (error: any) {
       toast({
         title: "خطأ في تحميل العملاء",

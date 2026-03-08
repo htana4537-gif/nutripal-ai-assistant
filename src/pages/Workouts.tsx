@@ -30,7 +30,7 @@ const Workouts = () => {
     try {
       const { data, error } = await supabase.from("workout_plans").select(`*, client:clients(full_name)`).order("date", { ascending: false });
       if (error) throw error;
-      setWorkouts(data || []);
+      setWorkouts((data as any) || []);
     } catch (error) { toast({ title: "خطأ", description: "فشل في تحميل التمارين", variant: "destructive" }); } finally { setLoading(false); }
   };
 
