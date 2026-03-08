@@ -7,6 +7,7 @@ import {
   Apple, Beef, Wheat, Milk, Coffee, Cookie, Leaf,
   Sparkles, Droplets, Check
 } from "lucide-react";
+import { FOODS, FOOD_CATEGORIES, type Food } from "@/data/foods";
 
 const CATEGORY_ICONS: Record<string, any> = {
   all: Sparkles,
