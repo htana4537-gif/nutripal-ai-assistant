@@ -59,16 +59,16 @@
     --gradient-accent: linear-gradient(135deg, hsl(80 70% 50%), hsl(142 70% 45%));
     --gradient-bg: linear-gradient(180deg, hsl(160 30% 6%), hsl(160 30% 12%));
     
-    /* Liquid blob gradients */
-    --gradient-blob-1: radial-gradient(ellipse at 30% 20%, hsl(142 70% 45% / 0.4) 0%, transparent 50%);
-    --gradient-blob-2: radial-gradient(ellipse at 70% 60%, hsl(45 95% 55% / 0.3) 0%, transparent 50%);
-    --gradient-blob-3: radial-gradient(ellipse at 50% 80%, hsl(80 70% 50% / 0.25) 0%, transparent 50%);
+    /* Liquid blob gradients - subtle and harmonious */
+    --gradient-blob-1: radial-gradient(ellipse at 20% 20%, hsl(142 70% 45% / 0.15) 0%, transparent 60%);
+    --gradient-blob-2: radial-gradient(ellipse at 80% 50%, hsl(142 50% 35% / 0.1) 0%, transparent 60%);
+    --gradient-blob-3: radial-gradient(ellipse at 50% 90%, hsl(80 50% 40% / 0.08) 0%, transparent 60%);
 
     /* Glass effects */
-    --glass-bg: hsl(160 20% 12% / 0.6);
-    --glass-border: hsl(160 20% 30% / 0.3);
-    --glass-shadow: 0 8px 32px hsl(0 0% 0% / 0.3);
-    --glass-blur: 20px;
+    --glass-bg: hsl(160 20% 12% / 0.65);
+    --glass-border: hsl(142 30% 30% / 0.2);
+    --glass-shadow: 0 8px 32px hsl(0 0% 0% / 0.25);
+    --glass-blur: 24px;
 
     /* Elegant shadows */
     --shadow-soft: 0 4px 16px hsl(0 0% 0% / 0.2);
@@ -168,22 +168,23 @@
       var(--gradient-blob-1),
       var(--gradient-blob-2),
       var(--gradient-blob-3);
-    animation: liquid-move 15s ease-in-out infinite;
+    animation: liquid-move 30s ease-in-out infinite;
     z-index: 0;
+    opacity: 0.8;
   }
 
   @keyframes liquid-move {
     0%, 100% {
       transform: translate(0, 0) scale(1);
+      opacity: 0.8;
     }
-    25% {
-      transform: translate(5%, 5%) scale(1.05);
+    33% {
+      transform: translate(1%, 1%) scale(1.01);
+      opacity: 0.9;
     }
-    50% {
-      transform: translate(-3%, 8%) scale(0.98);
-    }
-    75% {
-      transform: translate(3%, -5%) scale(1.02);
+    66% {
+      transform: translate(-1%, 1%) scale(0.99);
+      opacity: 0.85;
     }
   }
 
