@@ -12,6 +12,9 @@ import Workouts from "./pages/Workouts";
 import Support from "./pages/Support";
 import AIChat from "./pages/AIChat";
 import ProgressTracking from "./pages/ProgressTracking";
+import Onboarding from "./pages/Onboarding";
+import NutritionHub from "./pages/NutritionHub";
+import FitnessHub from "./pages/FitnessHub";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -25,10 +28,13 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/onboarding" element={<Onboarding />} />
           <Route path="/clients" element={<Clients />} />
           <Route path="/conversations" element={<Conversations />} />
           <Route path="/meal-plans" element={<MealPlans />} />
+          <Route path="/nutrition" element={<NutritionHub />} />
           <Route path="/workouts" element={<Workouts />} />
+          <Route path="/fitness" element={<FitnessHub />} />
           <Route path="/progress" element={<ProgressTracking />} />
           <Route path="/ai-chat" element={<AIChat />} />
           <Route path="/support" element={<Support />} />
@@ -40,4 +46,3 @@ const App = () => (
 );
 
 export default App;
-

@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { Users, MessageSquare, Utensils, Dumbbell, TrendingUp, HeadphonesIcon, Sparkles, Bot, Activity } from "lucide-react";
+import { Users, MessageSquare, Utensils, Dumbbell, TrendingUp, HeadphonesIcon, Sparkles, Bot, Activity, Apple, Heart, UserPlus } from "lucide-react";
 import { NavLink } from "./NavLink";
 
 interface DashboardLayoutProps {
@@ -12,7 +12,9 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
     { name: "العملاء", href: "/clients", icon: Users },
     { name: "المحادثات", href: "/conversations", icon: MessageSquare },
     { name: "الخطط الغذائية", href: "/meal-plans", icon: Utensils },
+    { name: "مركز التغذية", href: "/nutrition", icon: Apple },
     { name: "خطط التمارين", href: "/workouts", icon: Dumbbell },
+    { name: "اللياقة والصحة", href: "/fitness", icon: Heart },
     { name: "متابعة التقدم", href: "/progress", icon: Activity },
     { name: "المساعد الذكي", href: "/ai-chat", icon: Bot },
     { name: "الدعم الفني", href: "/support", icon: HeadphonesIcon },
@@ -36,18 +38,18 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
               <Utensils className="h-6 w-6 text-primary-foreground" />
             </div>
             <div>
-              <h1 className="text-lg font-bold gradient-text">مساعد التغذية</h1>
+              <h1 className="text-lg font-bold gradient-text">AI GYM</h1>
               <p className="text-xs text-muted-foreground">نظام الإدارة الذكي</p>
             </div>
           </div>
 
           {/* Navigation */}
-          <nav className="flex-1 space-y-2 p-4 overflow-y-auto">
+          <nav className="flex-1 space-y-1.5 p-4 overflow-y-auto">
             {navigation.map((item) => (
               <NavLink
                 key={item.href}
                 to={item.href}
-                className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-muted-foreground transition-all duration-300 hover:bg-muted/50 hover:text-foreground group"
+                className="flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium text-muted-foreground transition-all duration-300 hover:bg-muted/50 hover:text-foreground group"
                 activeClassName="bg-gradient-primary text-primary-foreground hover:bg-gradient-primary hover:text-primary-foreground glow-green"
               >
                 <item.icon className="h-5 w-5 transition-transform duration-300 group-hover:scale-110" />
@@ -55,6 +57,18 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
               </NavLink>
             ))}
           </nav>
+
+          {/* Onboarding Link */}
+          <div className="px-4 pb-2">
+            <NavLink
+              to="/onboarding"
+              className="flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium text-muted-foreground transition-all duration-300 hover:bg-muted/50 hover:text-foreground group"
+              activeClassName="bg-gradient-secondary text-secondary-foreground"
+            >
+              <UserPlus className="h-5 w-5" />
+              إعداد الملف الشخصي
+            </NavLink>
+          </div>
 
           {/* Footer */}
           <div className="border-t border-border/30 p-4">
