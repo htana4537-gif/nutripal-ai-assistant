@@ -40,7 +40,7 @@ const Conversations = () => {
     try {
       const { data, error } = await supabase.from("conversations").select(`*, client:clients(full_name, status)`).order("last_message_at", { ascending: false });
       if (error) throw error;
-      setConversations(data || []);
+      setConversations((data as any) || []);
     } catch (error) {
       toast({ title: "خطأ", description: "فشل في تحميل المحادثات", variant: "destructive" });
     } finally {

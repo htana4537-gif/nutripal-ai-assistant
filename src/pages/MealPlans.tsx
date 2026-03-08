@@ -34,7 +34,7 @@ const MealPlans = () => {
     try {
       const { data, error } = await supabase.from("meal_plans").select(`*, client:clients(full_name)`).order("date", { ascending: false });
       if (error) throw error;
-      setMealPlans(data || []);
+      setMealPlans((data as any) || []);
     } catch (error) {
       toast({ title: "خطأ", description: "فشل في تحميل خطط الوجبات", variant: "destructive" });
     } finally { setLoading(false); }

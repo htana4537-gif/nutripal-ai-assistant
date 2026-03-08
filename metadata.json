@@ -1,8 +1,0 @@
-{
-  "name": "AI GYM",
-  "description": "An intelligent, proactive personal trainer and nutritionist powered by Gemini. Features personalized plans, diet tracking, and psychological support.",
-  "requestFramePermissions": [
-    "camera",
-    "microphone"
-  ]
-}
