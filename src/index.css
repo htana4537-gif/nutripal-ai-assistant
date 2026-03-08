@@ -168,8 +168,9 @@
       var(--gradient-blob-1),
       var(--gradient-blob-2),
       var(--gradient-blob-3);
-    animation: liquid-move 15s ease-in-out infinite;
+    animation: liquid-move 30s ease-in-out infinite;
     z-index: 0;
+    opacity: 0.8;
   }
 
   @keyframes liquid-move {
