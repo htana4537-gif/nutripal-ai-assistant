@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { Users, MessageSquare, Utensils, Dumbbell, TrendingUp, HeadphonesIcon, Sparkles, Bot, Activity, Apple, Heart, UserPlus } from "lucide-react";
+import { Users, MessageSquare, Utensils, Dumbbell, TrendingUp, HeadphonesIcon, Sparkles, Bot, Activity, Apple, Heart, UserPlus, ShoppingBag } from "lucide-react";
 import { NavLink } from "./NavLink";
 
 interface DashboardLayoutProps {
