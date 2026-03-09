@@ -216,7 +216,7 @@ const NutritionHub = () => {
                       {food.available ? "متوفر" : "غير متوفر"}
                     </button>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           </div>
