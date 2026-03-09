@@ -57,20 +57,13 @@ const FoodDetails = () => {
             {/* Image */}
             <div className="space-y-4">
               <AspectRatio ratio={1}>
-                {food.imageUrl ? (
-                  <img
-                    src={food.imageUrl}
-                    alt={food.name}
-                    className="object-cover w-full h-full rounded-2xl shadow-lg"
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).style.display = 'none';
-                      (e.target as HTMLImageElement).nextElementSibling?.classList.remove('hidden');
-                    }}
-                  />
-                ) : null}
-                <div className={`${food.imageUrl ? 'hidden' : ''} w-full h-full rounded-2xl glass flex items-center justify-center`}>
-                  <span className="text-8xl">{food.emoji}</span>
-                </div>
+                <FoodImage
+                  imageUrl={food.imageUrl}
+                  alt={food.name}
+                  loading="eager"
+                  className="w-full h-full rounded-2xl shadow-lg"
+                  fallback={<span className="text-8xl">{food.emoji}</span>}
+                />
               </AspectRatio>
             </div>
 

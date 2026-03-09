@@ -172,7 +172,12 @@ const NutritionHub = () => {
                   }`}
                 >
                   <div className="flex items-start gap-3 mb-4">
-                    <div className="text-3xl">{food.emoji}</div>
+                    <FoodImage
+                      imageUrl={food.imageUrl}
+                      alt={food.name}
+                      fallback={<span className="text-3xl">{food.emoji}</span>}
+                      className="h-12 w-12 rounded-xl glass shrink-0"
+                    />
                     <div className="flex-1 min-w-0">
                       <h3 className="font-bold text-foreground truncate">{food.name}</h3>
                       <p className="text-xs text-primary font-bold">{food.category}</p>
