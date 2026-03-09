@@ -10,6 +10,7 @@ export interface Food {
   unit: string;     // وحدة القياس
   emoji: string;
   available: boolean;
+  imageUrl?: string;
 }
 
 export const FOOD_CATEGORIES = [

@@ -147,10 +147,10 @@ const FoodDetails = () => {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
-              {Object.entries(details.nutrients).map(([key, value]: [string, string]) => (
+              {Object.entries(details.nutrients).map(([key, value]) => (
                 <div key={key} className="flex justify-between items-center p-3 glass rounded-lg">
                   <span className="text-sm text-foreground">{key}</span>
-                  <span className="text-sm font-bold text-primary">{value}</span>
+                  <span className="text-sm font-bold text-primary">{String(value)}</span>
                 </div>
               ))}
             </CardContent>
