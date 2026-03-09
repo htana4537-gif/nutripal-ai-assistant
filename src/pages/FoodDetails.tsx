@@ -239,7 +239,7 @@ const FoodDetails = () => {
               <CardTitle className="text-foreground">التخزين والحفظ</CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
-              {details.storage.map((storage, index) => (
+              {details.storage.map((storage: string, index: number) => (
                 <div key={index} className="flex items-start gap-3 p-3 glass rounded-lg">
                   <div className="w-2 h-2 rounded-full bg-blue-500 mt-2 shrink-0" />
                   <p className="text-sm text-foreground">{storage}</p>
