@@ -14,6 +14,7 @@ import AIChat from "./pages/AIChat";
 import ProgressTracking from "./pages/ProgressTracking";
 import Onboarding from "./pages/Onboarding";
 import NutritionHub from "./pages/NutritionHub";
+import FoodDetails from "./pages/FoodDetails";
 import FitnessHub from "./pages/FitnessHub";
 import Store from "./pages/Store";
 import NotFound from "./pages/NotFound";
@@ -34,6 +35,7 @@ const App = () => (
           <Route path="/conversations" element={<Conversations />} />
           <Route path="/meal-plans" element={<MealPlans />} />
           <Route path="/nutrition" element={<NutritionHub />} />
+          <Route path="/nutrition/:id" element={<FoodDetails />} />
           <Route path="/workouts" element={<Workouts />} />
           <Route path="/fitness" element={<FitnessHub />} />
           <Route path="/progress" element={<ProgressTracking />} />

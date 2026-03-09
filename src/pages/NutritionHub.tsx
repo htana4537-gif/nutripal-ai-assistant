@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import { Link } from "react-router-dom";
 import DashboardLayout from "@/components/DashboardLayout";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
@@ -162,10 +163,11 @@ const NutritionHub = () => {
             {/* Food Grid */}
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {filteredFoods.map((food) => (
-                <div
+                <Link
                   key={food.id}
-                  className={`glass-card p-5 group relative transition-all duration-300 ${
-                    !food.available ? "opacity-55 saturate-50" : "hover-scale"
+                  to={`/nutrition/${food.id}`}
+                  className={`glass-card p-5 group relative transition-all duration-300 block ${
+                    !food.available ? "opacity-55 saturate-50" : "hover-scale hover:glow-primary"
                   }`}
                 >
                   <div className="flex items-start gap-3 mb-4">
@@ -214,7 +216,7 @@ const NutritionHub = () => {
                       {food.available ? "متوفر" : "غير متوفر"}
                     </button>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           </div>
