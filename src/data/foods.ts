@@ -62,7 +62,7 @@ export const FOODS: Food[] = [
   { id: "27", name: "سبانخ", category: "Vegetables", calories: 23, protein: 2.9, carbs: 3.6, fats: 0.4, price: 15, unit: "كجم", emoji: "🥬", available: true, imageUrl: "/src/assets/food-images/spinach.png" },
   { id: "28", name: "بروكلي", category: "Vegetables", calories: 34, protein: 2.8, carbs: 7, fats: 0.4, price: 40, unit: "كجم", emoji: "🥦", available: true, imageUrl: "/src/assets/food-images/broccoli.png" },
   { id: "29", name: "فلفل ألوان", category: "Vegetables", calories: 31, protein: 1, carbs: 6, fats: 0.3, price: 50, unit: "كجم", emoji: "🫑", available: true, imageUrl: "/src/assets/food-images/bell-peppers.png" },
-  { id: "30", name: "فلفل أخضر", category: "Vegetables", calories: 20, protein: 0.9, carbs: 4.6, fats: 0.2, price: 15, unit: "كجم", emoji: "🌶️", available: true },
+  { id: "30", name: "فلفل أخضر", category: "Vegetables", calories: 20, protein: 0.9, carbs: 4.6, fats: 0.2, price: 15, unit: "كجم", emoji: "🌶️", available: true, imageUrl: "/src/assets/food-images/bell-peppers.png" },
   { id: "31", name: "كوسة", category: "Vegetables", calories: 17, protein: 1.2, carbs: 3.1, fats: 0.3, price: 12, unit: "كجم", emoji: "🥒", available: true, imageUrl: "/src/assets/food-images/zucchini.png" },
   { id: "32", name: "باذنجان", category: "Vegetables", calories: 25, protein: 1, carbs: 6, fats: 0.2, price: 14, unit: "كجم", emoji: "🍆", available: true, imageUrl: "/src/assets/food-images/eggplant.png" },
   { id: "33", name: "قرنبيط", category: "Vegetables", calories: 25, protein: 1.9, carbs: 5, fats: 0.3, price: 15, unit: "كجم", emoji: "🥦", available: true, imageUrl: "/src/assets/food-images/cauliflower.png" },
