@@ -17,7 +17,7 @@ const FoodDetails = () => {
   const food = FOODS.find(f => f.id === id);
   const details = getFoodDetails(id || "");
 
-  if (!food || !details) {
+  if (!food) {
     return (
       <DashboardLayout>
         <div className="p-8">
