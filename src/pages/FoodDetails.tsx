@@ -206,7 +206,7 @@ const FoodDetails = () => {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
-              {details.warnings.map((warning, index) => (
+              {details.warnings.map((warning: string, index: number) => (
                 <div key={index} className="flex items-start gap-3 p-3 glass rounded-lg border-l-4 border-destructive/30">
                   <AlertTriangle className="h-4 w-4 text-destructive mt-0.5 shrink-0" />
                   <p className="text-sm text-foreground">{warning}</p>
