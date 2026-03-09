@@ -14,6 +14,7 @@ import AIChat from "./pages/AIChat";
 import ProgressTracking from "./pages/ProgressTracking";
 import Onboarding from "./pages/Onboarding";
 import NutritionHub from "./pages/NutritionHub";
+import FoodDetails from "./pages/FoodDetails";
 import FitnessHub from "./pages/FitnessHub";
 import Store from "./pages/Store";
 import NotFound from "./pages/NotFound";
