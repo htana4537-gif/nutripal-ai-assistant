@@ -7,7 +7,7 @@ import { Separator } from "@/components/ui/separator";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Skeleton } from "@/components/ui/skeleton";
 import { FOODS } from "@/data/foods";
-import { FOOD_DETAILS } from "@/data/foodsDetailedData";
+import { getFoodDetails } from "@/data/foodsDetailedData";
 import DashboardLayout from "@/components/DashboardLayout";
 
 const FoodDetails = () => {
