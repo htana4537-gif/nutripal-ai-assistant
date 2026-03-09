@@ -132,16 +132,16 @@ export const FOODS: Food[] = [
   { id: "91", name: "حليب جاموسي", category: "Dairy", calories: 97, protein: 3.7, carbs: 5.2, fats: 6.9, price: 25, unit: "لتر", emoji: "🥛", available: true, imageUrl: "/src/assets/food-images/milk.png" },
 
   // ===== بقوليات (Legumes) - بالكيلو =====
-  { id: "92", name: "فول مدمس (معلب)", category: "Legumes", calories: 110, protein: 8, carbs: 19, fats: 0.4, price: 18, unit: "علبة", emoji: "🫘", available: true },
-  { id: "93", name: "فول ناشف", category: "Legumes", calories: 341, protein: 23, carbs: 58, fats: 1.5, price: 30, unit: "كجم", emoji: "🫘", available: true },
-  { id: "94", name: "عدس أصفر", category: "Legumes", calories: 116, protein: 9, carbs: 20, fats: 0.4, price: 35, unit: "كجم", emoji: "🫘", available: true },
-  { id: "95", name: "عدس بني (أسود)", category: "Legumes", calories: 116, protein: 9, carbs: 20, fats: 0.4, price: 40, unit: "كجم", emoji: "🫘", available: true },
-  { id: "96", name: "حمص حب", category: "Legumes", calories: 164, protein: 9, carbs: 27, fats: 2.6, price: 45, unit: "كجم", emoji: "🫘", available: true },
-  { id: "97", name: "فاصوليا بيضاء", category: "Legumes", calories: 127, protein: 8.7, carbs: 23, fats: 0.5, price: 50, unit: "كجم", emoji: "🫘", available: true },
-  { id: "98", name: "فاصوليا حمراء", category: "Legumes", calories: 127, protein: 8.7, carbs: 22, fats: 0.5, price: 55, unit: "كجم", emoji: "🫘", available: true },
-  { id: "99", name: "لوبيا", category: "Legumes", calories: 116, protein: 7.7, carbs: 21, fats: 0.5, price: 40, unit: "كجم", emoji: "🫘", available: true },
-  { id: "100", name: "بازلاء خضراء مجمدة", category: "Legumes", calories: 81, protein: 5.4, carbs: 14, fats: 0.4, price: 35, unit: "400g", emoji: "🟢", available: true },
-  { id: "101", name: "فول نابت", category: "Legumes", calories: 105, protein: 8, carbs: 17, fats: 0.6, price: 15, unit: "كجم", emoji: "🌱", available: true },
+  { id: "92", name: "فول مدمس (معلب)", category: "Legumes", calories: 110, protein: 8, carbs: 19, fats: 0.4, price: 18, unit: "علبة", emoji: "🫘", available: true, imageUrl: "/src/assets/food-images/fava-beans.png" },
+  { id: "93", name: "فول ناشف", category: "Legumes", calories: 341, protein: 23, carbs: 58, fats: 1.5, price: 30, unit: "كجم", emoji: "🫘", available: true, imageUrl: "/src/assets/food-images/fava-beans.png" },
+  { id: "94", name: "عدس أصفر", category: "Legumes", calories: 116, protein: 9, carbs: 20, fats: 0.4, price: 35, unit: "كجم", emoji: "🫘", available: true, imageUrl: "/src/assets/food-images/yellow-lentils.png" },
+  { id: "95", name: "عدس بني (أسود)", category: "Legumes", calories: 116, protein: 9, carbs: 20, fats: 0.4, price: 40, unit: "كجم", emoji: "🫘", available: true, imageUrl: "/src/assets/food-images/yellow-lentils.png" },
+  { id: "96", name: "حمص حب", category: "Legumes", calories: 164, protein: 9, carbs: 27, fats: 2.6, price: 45, unit: "كجم", emoji: "🫘", available: true, imageUrl: "/src/assets/food-images/chickpeas.png" },
+  { id: "97", name: "فاصوليا بيضاء", category: "Legumes", calories: 127, protein: 8.7, carbs: 23, fats: 0.5, price: 50, unit: "كجم", emoji: "🫘", available: true, imageUrl: "/src/assets/food-images/white-beans.png" },
+  { id: "98", name: "فاصوليا حمراء", category: "Legumes", calories: 127, protein: 8.7, carbs: 22, fats: 0.5, price: 55, unit: "كجم", emoji: "🫘", available: true, imageUrl: "/src/assets/food-images/white-beans.png" },
+  { id: "99", name: "لوبيا", category: "Legumes", calories: 116, protein: 7.7, carbs: 21, fats: 0.5, price: 40, unit: "كجم", emoji: "🫘", available: true, imageUrl: "/src/assets/food-images/white-beans.png" },
+  { id: "100", name: "بازلاء خضراء مجمدة", category: "Legumes", calories: 81, protein: 5.4, carbs: 14, fats: 0.4, price: 35, unit: "400g", emoji: "🟢", available: true, imageUrl: "/src/assets/food-images/peas.png" },
+  { id: "101", name: "فول نابت", category: "Legumes", calories: 105, protein: 8, carbs: 17, fats: 0.6, price: 15, unit: "كجم", emoji: "🌱", available: true, imageUrl: "/src/assets/food-images/fava-beans.png" },
 
   // ===== مشروبات (Beverages) =====
   { id: "102", name: "قهوة تركي (250g)", category: "Beverages", calories: 2, protein: 0.3, carbs: 0, fats: 0, price: 80, unit: "250g", emoji: "☕", available: true },
