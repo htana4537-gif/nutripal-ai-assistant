@@ -125,10 +125,10 @@ export const FOODS: Food[] = [
   { id: "84", name: "جبنة رومي", category: "Dairy", calories: 380, protein: 25, carbs: 3.6, fats: 30, price: 180, unit: "كجم", emoji: "🧀", available: true, imageUrl: "/src/assets/food-images/cheese.png" },
   { id: "85", name: "جبنة شيدر", category: "Dairy", calories: 402, protein: 25, carbs: 1.3, fats: 33, price: 160, unit: "كجم", emoji: "🧀", available: true, imageUrl: "/src/assets/food-images/cheese.png" },
   { id: "86", name: "جبنة موزاريلا", category: "Dairy", calories: 280, protein: 28, carbs: 3.1, fats: 17, price: 140, unit: "كجم", emoji: "🧀", available: true, imageUrl: "/src/assets/food-images/cheese.png" },
-  { id: "87", name: "قشطة", category: "Dairy", calories: 195, protein: 2.8, carbs: 4.3, fats: 19, price: 12, unit: "علبة", emoji: "🍶", available: true },
-  { id: "88", name: "لبنة", category: "Dairy", calories: 150, protein: 8, carbs: 5, fats: 11, price: 45, unit: "كجم", emoji: "🥛", available: true },
+  { id: "87", name: "قشطة", category: "Dairy", calories: 195, protein: 2.8, carbs: 4.3, fats: 19, price: 12, unit: "علبة", emoji: "🍶", available: true, imageUrl: "/src/assets/food-images/yogurt.png" },
+  { id: "88", name: "لبنة", category: "Dairy", calories: 150, protein: 8, carbs: 5, fats: 11, price: 45, unit: "كجم", emoji: "🥛", available: true, imageUrl: "/src/assets/food-images/yogurt.png" },
   { id: "89", name: "زبدة (200g)", category: "Dairy", calories: 717, protein: 0.9, carbs: 0.1, fats: 81, price: 50, unit: "200g", emoji: "🧈", available: true, imageUrl: "/src/assets/food-images/butter.png" },
-  { id: "90", name: "سمنة بلدي", category: "Dairy", calories: 900, protein: 0, carbs: 0, fats: 100, price: 160, unit: "كجم", emoji: "🧈", available: true },
+  { id: "90", name: "سمنة بلدي", category: "Dairy", calories: 900, protein: 0, carbs: 0, fats: 100, price: 160, unit: "كجم", emoji: "🧈", available: true, imageUrl: "/src/assets/food-images/butter.png" },
   { id: "91", name: "حليب جاموسي", category: "Dairy", calories: 97, protein: 3.7, carbs: 5.2, fats: 6.9, price: 25, unit: "لتر", emoji: "🥛", available: true, imageUrl: "/src/assets/food-images/milk.png" },
 
   // ===== بقوليات (Legumes) - بالكيلو =====
