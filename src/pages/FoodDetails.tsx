@@ -167,7 +167,7 @@ const FoodDetails = () => {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
-              {details.sources.map((source, index) => (
+              {details.sources.map((source: string, index: number) => (
                 <div key={index} className="flex items-center gap-3 p-3 glass rounded-lg">
                   <div className="w-2 h-2 rounded-full bg-accent mt-1 shrink-0" />
                   <p className="text-sm text-foreground">{source}</p>
