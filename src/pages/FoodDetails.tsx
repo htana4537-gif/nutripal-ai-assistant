@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Skeleton } from "@/components/ui/skeleton";
+import FoodImage from "@/components/FoodImage";
 import { FOODS } from "@/data/foods";
 import { getFoodDetails } from "@/data/foodsDetailedData";
 import DashboardLayout from "@/components/DashboardLayout";
