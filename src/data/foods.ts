@@ -32,9 +32,9 @@ export const FOOD_CATEGORIES = [
 export const FOODS: Food[] = [
   // ===== بروتين (Proteins) - الأسعار بالكيلو =====
   { id: "1", name: "صدور دجاج", category: "Proteins", calories: 165, protein: 31, carbs: 0, fats: 3.6, price: 140, unit: "كجم", emoji: "🍗", available: true, imageUrl: "/src/assets/food-images/chicken-breast.png" },
-  { id: "2", name: "أوراك دجاج", category: "Proteins", calories: 209, protein: 26, carbs: 0, fats: 10.9, price: 110, unit: "كجم", emoji: "🍗", available: true, imageUrl: "/src/assets/food-images/chicken-breast.png" },
-  { id: "3", name: "دجاج كامل", category: "Proteins", calories: 239, protein: 27, carbs: 0, fats: 14, price: 95, unit: "كجم", emoji: "🐔", available: true, imageUrl: "/src/assets/food-images/chicken-breast.png" },
-  { id: "4", name: "كبدة دجاج", category: "Proteins", calories: 167, protein: 24, carbs: 1, fats: 6.5, price: 80, unit: "كجم", emoji: "🫀", available: true, imageUrl: "/src/assets/food-images/beef.png" },
+  { id: "2", name: "أوراك دجاج", category: "Proteins", calories: 209, protein: 26, carbs: 0, fats: 10.9, price: 110, unit: "كجم", emoji: "🍗", available: true, imageUrl: "/src/assets/food-images/chicken-thighs.png" },
+  { id: "3", name: "دجاج كامل", category: "Proteins", calories: 239, protein: 27, carbs: 0, fats: 14, price: 95, unit: "كجم", emoji: "🐔", available: true, imageUrl: "/src/assets/food-images/chicken-whole.png" },
+  { id: "4", name: "كبدة دجاج", category: "Proteins", calories: 167, protein: 24, carbs: 1, fats: 6.5, price: 80, unit: "كجم", emoji: "🫀", available: true, imageUrl: "/src/assets/food-images/chicken-liver.png" },
   { id: "5", name: "لحم بقري (فخذ)", category: "Proteins", calories: 250, protein: 26, carbs: 0, fats: 15, price: 380, unit: "كجم", emoji: "🥩", available: true, imageUrl: "/src/assets/food-images/beef.png" },
   { id: "6", name: "لحم بقري مفروم", category: "Proteins", calories: 254, protein: 17, carbs: 0, fats: 20, price: 320, unit: "كجم", emoji: "🥩", available: true, imageUrl: "/src/assets/food-images/beef.png" },
   { id: "7", name: "كفتة", category: "Proteins", calories: 280, protein: 18, carbs: 5, fats: 21, price: 300, unit: "كجم", emoji: "🥩", available: true, imageUrl: "/src/assets/food-images/beef.png" },
