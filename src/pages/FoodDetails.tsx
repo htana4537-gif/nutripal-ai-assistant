@@ -224,7 +224,7 @@ const FoodDetails = () => {
               <CardTitle className="text-foreground">نصائح التحضير</CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
-              {details.preparationTips.map((tip, index) => (
+              {details.preparationTips.map((tip: string, index: number) => (
                 <div key={index} className="flex items-start gap-3 p-3 glass rounded-lg">
                   <div className="w-2 h-2 rounded-full bg-orange-500 mt-2 shrink-0" />
                   <p className="text-sm text-foreground">{tip}</p>
