@@ -53,11 +53,11 @@ export const FOODS: Food[] = [
   { id: "20", name: "كاليماري", category: "Proteins", calories: 92, protein: 15.6, carbs: 3.1, fats: 1.4, price: 220, unit: "كجم", emoji: "🦑", available: true },
 
   // ===== خضروات (Vegetables) - الأسعار بالكيلو =====
-  { id: "21", name: "طماطم", category: "Vegetables", calories: 18, protein: 0.9, carbs: 3.9, fats: 0.2, price: 12, unit: "كجم", emoji: "🍅", available: true },
-  { id: "22", name: "خيار", category: "Vegetables", calories: 15, protein: 0.7, carbs: 3.6, fats: 0.1, price: 10, unit: "كجم", emoji: "🥒", available: true },
-  { id: "23", name: "بصل", category: "Vegetables", calories: 40, protein: 1.1, carbs: 9.3, fats: 0.1, price: 18, unit: "كجم", emoji: "🧅", available: true },
-  { id: "24", name: "ثوم", category: "Vegetables", calories: 149, protein: 6.4, carbs: 33, fats: 0.5, price: 80, unit: "كجم", emoji: "🧄", available: true },
-  { id: "25", name: "بطاطس", category: "Vegetables", calories: 77, protein: 2, carbs: 17, fats: 0.1, price: 15, unit: "كجم", emoji: "🥔", available: true },
+  { id: "tomato", name: "طماطم", category: "Vegetables", calories: 18, protein: 0.9, carbs: 3.9, fats: 0.2, price: 12, unit: "كجم", emoji: "🍅", available: true, imageUrl: "/src/assets/food-images/tomato.png" },
+  { id: "cucumber", name: "خيار", category: "Vegetables", calories: 15, protein: 0.7, carbs: 3.6, fats: 0.1, price: 10, unit: "كجم", emoji: "🥒", available: true, imageUrl: "/src/assets/food-images/cucumber.png" },
+  { id: "onion", name: "بصل", category: "Vegetables", calories: 40, protein: 1.1, carbs: 9.3, fats: 0.1, price: 18, unit: "كجم", emoji: "🧅", available: true },
+  { id: "garlic", name: "ثوم", category: "Vegetables", calories: 149, protein: 6.4, carbs: 33, fats: 0.5, price: 80, unit: "كجم", emoji: "🧄", available: true },
+  { id: "potato", name: "بطاطس", category: "Vegetables", calories: 77, protein: 2, carbs: 17, fats: 0.1, price: 15, unit: "كجم", emoji: "🥔", available: true },
   { id: "26", name: "جزر", category: "Vegetables", calories: 41, protein: 0.9, carbs: 10, fats: 0.2, price: 12, unit: "كجم", emoji: "🥕", available: true },
   { id: "27", name: "سبانخ", category: "Vegetables", calories: 23, protein: 2.9, carbs: 3.6, fats: 0.4, price: 15, unit: "كجم", emoji: "🥬", available: true },
   { id: "28", name: "بروكلي", category: "Vegetables", calories: 34, protein: 2.8, carbs: 7, fats: 0.4, price: 40, unit: "كجم", emoji: "🥦", available: true },
