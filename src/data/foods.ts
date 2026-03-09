@@ -109,10 +109,10 @@ export const FOODS: Food[] = [
   { id: "70", name: "خبز توست أسمر", category: "Carbs", calories: 247, protein: 13, carbs: 41, fats: 3.4, price: 30, unit: "كيس", emoji: "🍞", available: true, imageUrl: "/src/assets/food-images/bread.png" },
   { id: "71", name: "بطاطا حلوة", category: "Carbs", calories: 86, protein: 1.6, carbs: 20, fats: 0.1, price: 20, unit: "كجم", emoji: "🍠", available: true, imageUrl: "/src/assets/food-images/sweet-potato.png" },
   { id: "72", name: "شوفان (500g)", category: "Carbs", calories: 389, protein: 17, carbs: 66, fats: 7, price: 65, unit: "500g", emoji: "🥣", available: true, imageUrl: "/src/assets/food-images/oats.png" },
-  { id: "73", name: "كورن فليكس", category: "Carbs", calories: 357, protein: 8, carbs: 84, fats: 0.4, price: 55, unit: "500g", emoji: "🥣", available: true },
-  { id: "74", name: "برغل", category: "Carbs", calories: 342, protein: 12, carbs: 76, fats: 1.3, price: 35, unit: "كجم", emoji: "🌾", available: true },
-  { id: "75", name: "كسكسي", category: "Carbs", calories: 112, protein: 3.8, carbs: 23, fats: 0.2, price: 30, unit: "500g", emoji: "🌾", available: true },
-  { id: "76", name: "فريك", category: "Carbs", calories: 330, protein: 14, carbs: 68, fats: 2.5, price: 60, unit: "كجم", emoji: "🌾", available: true },
+  { id: "73", name: "كورن فليكس", category: "Carbs", calories: 357, protein: 8, carbs: 84, fats: 0.4, price: 55, unit: "500g", emoji: "🥣", available: true, imageUrl: "/src/assets/food-images/oats.png" },
+  { id: "74", name: "برغل", category: "Carbs", calories: 342, protein: 12, carbs: 76, fats: 1.3, price: 35, unit: "كجم", emoji: "🌾", available: true, imageUrl: "/src/assets/food-images/bulgur.png" },
+  { id: "75", name: "كسكسي", category: "Carbs", calories: 112, protein: 3.8, carbs: 23, fats: 0.2, price: 30, unit: "500g", emoji: "🌾", available: true, imageUrl: "/src/assets/food-images/couscous.png" },
+  { id: "76", name: "فريك", category: "Carbs", calories: 330, protein: 14, carbs: 68, fats: 2.5, price: 60, unit: "كجم", emoji: "🌾", available: true, imageUrl: "/src/assets/food-images/bulgur.png" },
   { id: "77", name: "خبز صاج", category: "Carbs", calories: 260, protein: 8, carbs: 52, fats: 2, price: 5, unit: "رغيف", emoji: "🫓", available: true, imageUrl: "/src/assets/food-images/bread.png" },
 
   // ===== ألبان (Dairy) =====
