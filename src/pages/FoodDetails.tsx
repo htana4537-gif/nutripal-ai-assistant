@@ -127,7 +127,7 @@ const FoodDetails = () => {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
-              {details.benefits.map((benefit, index) => (
+              {details.benefits.map((benefit: string, index: number) => (
                 <div key={index} className="flex items-start gap-3 p-3 glass rounded-lg">
                   <div className="w-2 h-2 rounded-full bg-primary mt-2 shrink-0" />
                   <p className="text-sm text-foreground">{benefit}</p>
