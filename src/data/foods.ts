@@ -44,13 +44,13 @@ export const FOODS: Food[] = [
   { id: "11", name: "سلمون (مستورد)", category: "Proteins", calories: 208, protein: 20, carbs: 0, fats: 13, price: 550, unit: "كجم", emoji: "🐟", available: true, imageUrl: "/src/assets/food-images/salmon.png" },
   { id: "12", name: "جمبري", category: "Proteins", calories: 99, protein: 24, carbs: 0.2, fats: 0.3, price: 300, unit: "كجم", emoji: "🦐", available: true, imageUrl: "/src/assets/food-images/shrimp.png" },
   { id: "13", name: "تونة معلبة (170g)", category: "Proteins", calories: 132, protein: 29, carbs: 0, fats: 1, price: 45, unit: "علبة", emoji: "🐟", available: true, imageUrl: "/src/assets/food-images/tuna.png" },
-  { id: "14", name: "سردين معلب", category: "Proteins", calories: 208, protein: 25, carbs: 0, fats: 11, price: 30, unit: "علبة", emoji: "🐟", available: true },
+  { id: "14", name: "سردين معلب", category: "Proteins", calories: 208, protein: 25, carbs: 0, fats: 11, price: 30, unit: "علبة", emoji: "🐟", available: true, imageUrl: "/src/assets/food-images/tuna.png" },
   { id: "15", name: "بيض بلدي", category: "Proteins", calories: 155, protein: 13, carbs: 1.1, fats: 11, price: 5.5, unit: "بيضة", emoji: "🥚", available: true, imageUrl: "/src/assets/food-images/eggs.png" },
   { id: "16", name: "بيض أبيض", category: "Proteins", calories: 147, protein: 12.6, carbs: 0.7, fats: 10, price: 4.5, unit: "بيضة", emoji: "🥚", available: true, imageUrl: "/src/assets/food-images/eggs.png" },
   { id: "17", name: "لحم ضأن", category: "Proteins", calories: 294, protein: 25, carbs: 0, fats: 21, price: 450, unit: "كجم", emoji: "🍖", available: true, imageUrl: "/src/assets/food-images/lamb.png" },
-  { id: "18", name: "ديك رومي صدور", category: "Proteins", calories: 135, protein: 30, carbs: 0, fats: 1, price: 180, unit: "كجم", emoji: "🦃", available: false },
+  { id: "18", name: "ديك رومي صدور", category: "Proteins", calories: 135, protein: 30, carbs: 0, fats: 1, price: 180, unit: "كجم", emoji: "🦃", available: false, imageUrl: "/src/assets/food-images/chicken-breast.png" },
   { id: "19", name: "سمك قاروص", category: "Proteins", calories: 124, protein: 24, carbs: 0, fats: 2.6, price: 200, unit: "كجم", emoji: "🐟", available: true, imageUrl: "/src/assets/food-images/fish.png" },
-  { id: "20", name: "كاليماري", category: "Proteins", calories: 92, protein: 15.6, carbs: 3.1, fats: 1.4, price: 220, unit: "كجم", emoji: "🦑", available: true },
+  { id: "20", name: "كاليماري", category: "Proteins", calories: 92, protein: 15.6, carbs: 3.1, fats: 1.4, price: 220, unit: "كجم", emoji: "🦑", available: true, imageUrl: "/src/assets/food-images/shrimp.png" },
 
   // ===== خضروات (Vegetables) - الأسعار بالكيلو =====
   { id: "tomato", name: "طماطم", category: "Vegetables", calories: 18, protein: 0.9, carbs: 3.9, fats: 0.2, price: 12, unit: "كجم", emoji: "🍅", available: true, imageUrl: "/src/assets/food-images/tomato.png" },
