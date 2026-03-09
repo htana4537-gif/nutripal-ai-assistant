@@ -15,7 +15,7 @@ const FoodDetails = () => {
   const navigate = useNavigate();
   
   const food = FOODS.find(f => f.id === id);
-  const details = FOOD_DETAILS[id || ""];
+  const details = getFoodDetails(id || "");
 
   if (!food || !details) {
     return (
