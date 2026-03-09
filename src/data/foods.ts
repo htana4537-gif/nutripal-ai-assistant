@@ -201,9 +201,9 @@ export const FOODS: Food[] = [
 
   // ===== المزيد =====
   { id: "150", name: "واي بروتين (سكوب)", category: "Proteins", calories: 120, protein: 24, carbs: 3, fats: 1.5, price: 35, unit: "سكوب", emoji: "🥤", available: true, imageUrl: "/src/assets/food-images/milk.png" },
-  { id: "151", name: "لانشون", category: "Proteins", calories: 260, protein: 12, carbs: 3, fats: 22, price: 65, unit: "كجم", emoji: "🥩", available: true, imageUrl: "/src/assets/food-images/beef.png" },
-  { id: "152", name: "بسطرمة", category: "Proteins", calories: 234, protein: 30, carbs: 1, fats: 12, price: 250, unit: "كجم", emoji: "🥩", available: true, imageUrl: "/src/assets/food-images/beef.png" },
-  { id: "153", name: "سجق", category: "Proteins", calories: 300, protein: 14, carbs: 2, fats: 26, price: 130, unit: "كجم", emoji: "🌭", available: true, imageUrl: "/src/assets/food-images/beef.png" },
+  { id: "151", name: "لانشون", category: "Proteins", calories: 260, protein: 12, carbs: 3, fats: 22, price: 65, unit: "كجم", emoji: "🥩", available: true, imageUrl: "/src/assets/food-images/luncheon.png" },
+  { id: "152", name: "بسطرمة", category: "Proteins", calories: 234, protein: 30, carbs: 1, fats: 12, price: 250, unit: "كجم", emoji: "🥩", available: true, imageUrl: "/src/assets/food-images/pastrami.png" },
+  { id: "153", name: "سجق", category: "Proteins", calories: 300, protein: 14, carbs: 2, fats: 26, price: 130, unit: "كجم", emoji: "🌭", available: true, imageUrl: "/src/assets/food-images/sausage.png" },
   { id: "154", name: "فاصوليا خضراء", category: "Vegetables", calories: 31, protein: 1.8, carbs: 7, fats: 0.1, price: 25, unit: "كجم", emoji: "🫛", available: true, imageUrl: "/src/assets/food-images/peas.png" },
   { id: "155", name: "مشروم", category: "Vegetables", calories: 22, protein: 3.1, carbs: 3.3, fats: 0.3, price: 50, unit: "كجم", emoji: "🍄", available: true, imageUrl: "/src/assets/food-images/mushroom.png" },
   { id: "156", name: "زيتون أخضر", category: "Vegetables", calories: 115, protein: 0.8, carbs: 6, fats: 11, price: 60, unit: "كجم", emoji: "🫒", available: true, imageUrl: "/src/assets/food-images/olives.png" },
