@@ -13,23 +13,34 @@ serve(async (req) => {
   }
 
   try {
-    const { image_url, client_id, conversation_id } = await req.json();
-    console.log('Analyzing food image:', { client_id, conversation_id });
-
-    const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
+    // Auth check
+    const authHeader = req.headers.get('Authorization');
+    if (!authHeader?.startsWith('Bearer ')) {
+      return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401, headers: corsHeaders });
+    }
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY')!;
+    const supabaseAuth = createClient(supabaseUrl, supabaseAnonKey, {
+      global: { headers: { Authorization: authHeader } }
+    });
+    const token = authHeader.replace('Bearer ', '');
+    const { data: claimsData, error: claimsError } = await supabaseAuth.auth.getClaims(token);
+    if (claimsError || !claimsData?.claims) {
+      return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401, headers: corsHeaders });
+    }
+
+    const { image_url, client_id, conversation_id } = await req.json();
+    console.log('Analyzing food image for client:', client_id);
+
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-    
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    // Get client info
     const { data: client } = await supabase
       .from('clients')
       .select('*')
       .eq('id', client_id)
       .single();
 
-    // Build system prompt with client context
     let systemPrompt = `أنت خبير تغذية متخصص في تحليل صور الطعام وحساب السعرات الحرارية. قم بتحليل الصورة وتقديم تقدير دقيق للسعرات والقيم الغذائية.`;
     
     if (client) {
@@ -47,7 +58,7 @@ serve(async (req) => {
 5. تقييم صحي للوجبة
 6. نصائح تحسين إذا لزم الأمر`;
 
-    // Call Lovable AI with vision
+    const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
     const aiResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -57,10 +68,7 @@ serve(async (req) => {
       body: JSON.stringify({
         model: 'google/gemini-2.5-flash',
         messages: [
-          { 
-            role: 'system', 
-            content: systemPrompt 
-          },
+          { role: 'system', content: systemPrompt },
           {
             role: 'user',
             content: [
@@ -73,15 +81,12 @@ serve(async (req) => {
     });
 
     if (!aiResponse.ok) {
-      const errorText = await aiResponse.text();
-      console.error('AI API error:', aiResponse.status, errorText);
-      throw new Error(`AI API error: ${aiResponse.status}`);
+      console.error('AI API error:', aiResponse.status);
+      throw new Error('AI service unavailable');
     }
 
     const aiData = await aiResponse.json();
     const response = aiData.choices[0].message.content;
-
-    console.log('Food image analyzed successfully');
 
     return new Response(
       JSON.stringify({ response }),
@@ -91,11 +96,8 @@ serve(async (req) => {
   } catch (error) {
     console.error('Error in analyze-food-image:', error);
     return new Response(
-      JSON.stringify({ error: error instanceof Error ? error.message : 'Unknown error' }),
-      { 
-        status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-      }
+      JSON.stringify({ error: 'حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى.' }),
+      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }
 });

@@ -13,16 +13,28 @@ serve(async (req) => {
   }
 
   try {
+    // Auth check
+    const authHeader = req.headers.get('Authorization');
+    if (!authHeader?.startsWith('Bearer ')) {
+      return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401, headers: corsHeaders });
+    }
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY')!;
+    const supabaseAuth = createClient(supabaseUrl, supabaseAnonKey, {
+      global: { headers: { Authorization: authHeader } }
+    });
+    const token = authHeader.replace('Bearer ', '');
+    const { data: claimsData, error: claimsError } = await supabaseAuth.auth.getClaims(token);
+    if (claimsError || !claimsData?.claims) {
+      return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401, headers: corsHeaders });
+    }
+
     const { client_id, date, meal_type } = await req.json();
     console.log('Generating meal plan:', { client_id, date, meal_type });
 
-    const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
-    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-    
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    // Get client info
     const { data: client } = await supabase
       .from('clients')
       .select('*')
@@ -30,12 +42,10 @@ serve(async (req) => {
       .single();
 
     if (!client) {
-      throw new Error('Client not found');
+      return new Response(JSON.stringify({ error: 'Client not found' }), { status: 404, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
     }
 
-    // Build detailed prompt
     let prompt = `أنشئ خطة وجبة مخصصة لـ${meal_type} بصيغة JSON.`;
-    
     prompt += `\n\nمعلومات العميل:`;
     if (client.weight) prompt += `\n- الوزن: ${client.weight} كجم`;
     if (client.height) prompt += `\n- الطول: ${client.height} سم`;
@@ -50,24 +60,11 @@ serve(async (req) => {
 
     prompt += `\n\nأرجع JSON بهذا الشكل:
 {
-  "foods": [
-    {
-      "name": "اسم الطعام",
-      "quantity": "الكمية",
-      "calories": عدد_السعرات,
-      "protein": البروتين_بالجرام,
-      "carbs": الكربوهيدرات_بالجرام,
-      "fats": الدهون_بالجرام
-    }
-  ],
-  "total_calories": إجمالي_السعرات,
-  "total_protein": إجمالي_البروتين,
-  "total_carbs": إجمالي_الكربوهيدرات,
-  "total_fats": إجمالي_الدهون,
-  "notes": "ملاحظات إضافية"
+  "foods": [{"name": "اسم الطعام", "quantity": "الكمية", "calories": 0, "protein": 0, "carbs": 0, "fats": 0}],
+  "total_calories": 0, "total_protein": 0, "total_carbs": 0, "total_fats": 0, "notes": ""
 }`;
 
-    // Call Lovable AI
+    const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
     const aiResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -84,23 +81,20 @@ serve(async (req) => {
     });
 
     if (!aiResponse.ok) {
-      const errorText = await aiResponse.text();
-      console.error('AI API error:', aiResponse.status, errorText);
-      throw new Error(`AI API error: ${aiResponse.status}`);
+      console.error('AI API error:', aiResponse.status);
+      throw new Error('AI service unavailable');
     }
 
     const aiData = await aiResponse.json();
     const responseText = aiData.choices[0].message.content;
 
-    // Parse JSON from response
     const jsonMatch = responseText.match(/\{[\s\S]*\}/);
     if (!jsonMatch) {
-      throw new Error('Failed to parse meal plan JSON');
+      throw new Error('Failed to parse meal plan');
     }
 
     const mealPlan = JSON.parse(jsonMatch[0]);
 
-    // Save to database
     const { data: savedPlan, error: saveError } = await supabase
       .from('meal_plans')
       .insert({
@@ -120,27 +114,19 @@ serve(async (req) => {
 
     if (saveError) {
       console.error('Error saving meal plan:', saveError);
-      throw saveError;
+      throw new Error('Failed to save meal plan');
     }
 
-    console.log('Meal plan generated and saved successfully');
-
     return new Response(
-      JSON.stringify({ 
-        message: 'تم إنشاء خطة الوجبة بنجاح',
-        meal_plan: savedPlan 
-      }),
+      JSON.stringify({ message: 'تم إنشاء خطة الوجبة بنجاح', meal_plan: savedPlan }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
 
   } catch (error) {
     console.error('Error in generate-meal-plan:', error);
     return new Response(
-      JSON.stringify({ error: error instanceof Error ? error.message : 'Unknown error' }),
-      { 
-        status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-      }
+      JSON.stringify({ error: 'حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى.' }),
+      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }
 });

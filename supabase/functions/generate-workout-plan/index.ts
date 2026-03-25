@@ -13,13 +13,26 @@ serve(async (req) => {
   }
 
   try {
-    const { client_id, date, workout_type, focus_area } = await req.json();
-    console.log('Generating workout plan:', { client_id, date, workout_type, focus_area });
-
-    const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
+    // Auth check
+    const authHeader = req.headers.get('Authorization');
+    if (!authHeader?.startsWith('Bearer ')) {
+      return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401, headers: corsHeaders });
+    }
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY')!;
+    const supabaseAuth = createClient(supabaseUrl, supabaseAnonKey, {
+      global: { headers: { Authorization: authHeader } }
+    });
+    const token = authHeader.replace('Bearer ', '');
+    const { data: claimsData, error: claimsError } = await supabaseAuth.auth.getClaims(token);
+    if (claimsError || !claimsData?.claims) {
+      return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401, headers: corsHeaders });
+    }
+
+    const { client_id, date, workout_type, focus_area } = await req.json();
+    console.log('Generating workout plan:', { client_id, date, workout_type });
+
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-    
     const supabase = createClient(supabaseUrl, supabaseKey);
 
     const { data: client } = await supabase
@@ -28,7 +41,9 @@ serve(async (req) => {
       .eq('id', client_id)
       .single();
 
-    if (!client) throw new Error('Client not found');
+    if (!client) {
+      return new Response(JSON.stringify({ error: 'Client not found' }), { status: 404, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+    }
 
     let prompt = `أنشئ خطة تمرين مخصصة بصيغة JSON.`;
     prompt += `\nنوع التمرين: ${workout_type || 'متنوع'}`;
@@ -44,20 +59,11 @@ serve(async (req) => {
 
     prompt += `\n\nأرجع JSON بهذا الشكل:
 {
-  "exercises": [
-    {
-      "name": "اسم التمرين",
-      "sets": عدد_المجموعات,
-      "reps": "عدد_التكرارات",
-      "rest_seconds": ثوان_الراحة,
-      "notes": "ملاحظات"
-    }
-  ],
-  "duration_minutes": مدة_التمرين,
-  "calories_burned": السعرات_المحروقة,
-  "notes": "ملاحظات عامة"
+  "exercises": [{"name": "اسم التمرين", "sets": 0, "reps": "0", "rest_seconds": 0, "notes": ""}],
+  "duration_minutes": 0, "calories_burned": 0, "notes": ""
 }`;
 
+    const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
     const aiResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -74,22 +80,15 @@ serve(async (req) => {
     });
 
     if (!aiResponse.ok) {
-      const errorText = await aiResponse.text();
-      console.error('AI API error:', aiResponse.status, errorText);
-      if (aiResponse.status === 429) {
-        return new Response(JSON.stringify({ error: 'تم تجاوز حد الطلبات، حاول لاحقاً' }), { status: 429, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
-      }
-      if (aiResponse.status === 402) {
-        return new Response(JSON.stringify({ error: 'يرجى إضافة رصيد للمتابعة' }), { status: 402, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
-      }
-      throw new Error(`AI API error: ${aiResponse.status}`);
+      console.error('AI API error:', aiResponse.status);
+      throw new Error('AI service unavailable');
     }
 
     const aiData = await aiResponse.json();
     const responseText = aiData.choices[0].message.content;
 
     const jsonMatch = responseText.match(/\{[\s\S]*\}/);
-    if (!jsonMatch) throw new Error('Failed to parse workout plan JSON');
+    if (!jsonMatch) throw new Error('Failed to parse workout plan');
 
     const workoutPlan = JSON.parse(jsonMatch[0]);
 
@@ -108,7 +107,7 @@ serve(async (req) => {
       .select()
       .single();
 
-    if (saveError) throw saveError;
+    if (saveError) throw new Error('Failed to save workout plan');
 
     return new Response(
       JSON.stringify({ message: 'تم إنشاء خطة التمرين بنجاح', workout_plan: savedPlan }),
@@ -118,7 +117,7 @@ serve(async (req) => {
   } catch (error) {
     console.error('Error in generate-workout-plan:', error);
     return new Response(
-      JSON.stringify({ error: error instanceof Error ? error.message : 'Unknown error' }),
+      JSON.stringify({ error: 'حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى.' }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }
