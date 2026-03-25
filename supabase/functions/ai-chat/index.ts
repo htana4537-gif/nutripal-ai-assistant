@@ -1,4 +1,5 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -11,6 +12,22 @@ Deno.serve(async (req) => {
   }
 
   try {
+    // Auth check
+    const authHeader = req.headers.get('Authorization');
+    if (!authHeader?.startsWith('Bearer ')) {
+      return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401, headers: corsHeaders });
+    }
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY')!;
+    const supabaseAuth = createClient(supabaseUrl, supabaseAnonKey, {
+      global: { headers: { Authorization: authHeader } }
+    });
+    const token = authHeader.replace('Bearer ', '');
+    const { data: claimsData, error: claimsError } = await supabaseAuth.auth.getClaims(token);
+    if (claimsError || !claimsData?.claims) {
+      return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401, headers: corsHeaders });
+    }
+
     const { messages, userMessage, imageData } = await req.json();
 
     const systemPrompt = `أنت مساعد ذكي متخصص في التغذية والصحة واللياقة البدنية. اسمك "مساعد التغذية الذكي".
@@ -50,29 +67,33 @@ Deno.serve(async (req) => {
 
     geminiMessages.push({ role: "user", parts: userParts });
 
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${Deno.env.get("GEMINI_API_KEY")}`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          system_instruction: { parts: [{ text: systemPrompt }] },
-          contents: geminiMessages,
-          generationConfig: {
-            temperature: 0.7,
-            maxOutputTokens: 1024,
-          },
-        }),
-      }
-    );
+    const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
+
+    const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${LOVABLE_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'google/gemini-2.5-flash',
+        messages: [
+          { role: 'system', content: systemPrompt },
+          ...geminiMessages.map((m: any) => ({
+            role: m.role === 'model' ? 'assistant' : 'user',
+            content: m.parts.map((p: any) => p.text).join('\n'),
+          })),
+        ],
+      }),
+    });
 
     if (!response.ok) {
-      const errText = await response.text();
-      throw new Error(`Gemini error: ${errText}`);
+      console.error('AI API error:', response.status);
+      throw new Error('AI service unavailable');
     }
 
     const data = await response.json();
-    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || "عذراً، لم أتمكن من الإجابة. يرجى المحاولة مرة أخرى.";
+    const text = data?.choices?.[0]?.message?.content || "عذراً، لم أتمكن من الإجابة. يرجى المحاولة مرة أخرى.";
 
     return new Response(JSON.stringify({ text }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -80,8 +101,8 @@ Deno.serve(async (req) => {
   } catch (error: any) {
     console.error("AI Chat error:", error);
     return new Response(
-      JSON.stringify({ text: "عذراً، حدث خطأ. يرجى المحاولة مرة أخرى.", error: error.message }),
-      { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      JSON.stringify({ text: "عذراً، حدث خطأ. يرجى المحاولة مرة أخرى." }),
+      { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   }
 });

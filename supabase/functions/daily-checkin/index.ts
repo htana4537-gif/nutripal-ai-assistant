@@ -13,16 +13,28 @@ serve(async (req) => {
   }
 
   try {
+    // Auth check
+    const authHeader = req.headers.get('Authorization');
+    if (!authHeader?.startsWith('Bearer ')) {
+      return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401, headers: corsHeaders });
+    }
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY')!;
+    const supabaseAuth = createClient(supabaseUrl, supabaseAnonKey, {
+      global: { headers: { Authorization: authHeader } }
+    });
+    const token = authHeader.replace('Bearer ', '');
+    const { data: claimsData, error: claimsError } = await supabaseAuth.auth.getClaims(token);
+    if (claimsError || !claimsData?.claims) {
+      return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401, headers: corsHeaders });
+    }
+
     const { client_id } = await req.json();
     console.log('Generating daily check-in for client:', client_id);
 
-    const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
-    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-    
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    // Get client info
     const { data: client } = await supabase
       .from('clients')
       .select('*')
@@ -30,10 +42,9 @@ serve(async (req) => {
       .single();
 
     if (!client) {
-      throw new Error('Client not found');
+      return new Response(JSON.stringify({ error: 'Client not found' }), { status: 404, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
     }
 
-    // Get recent progress logs
     const { data: recentLogs } = await supabase
       .from('progress_logs')
       .select('*')
@@ -41,7 +52,6 @@ serve(async (req) => {
       .order('log_date', { ascending: false })
       .limit(7);
 
-    // Get today's meal plan
     const today = new Date().toISOString().split('T')[0];
     const { data: todayMeals } = await supabase
       .from('meal_plans')
@@ -49,9 +59,7 @@ serve(async (req) => {
       .eq('client_id', client_id)
       .eq('date', today);
 
-    // Build context
     let context = `أنشئ رسالة متابعة يومية مخصصة للعميل:`;
-    
     if (client.full_name) context += `\nالاسم: ${client.full_name}`;
     if (client.target_weight) context += `\nالوزن المستهدف: ${client.target_weight} كجم`;
     if (client.daily_calorie_goal) context += `\nهدف السعرات: ${client.daily_calorie_goal} سعر`;
@@ -70,7 +78,7 @@ serve(async (req) => {
 
     context += `\n\nاكتب رسالة تحفيزية قصيرة (2-3 جمل) تشجع العميل على متابعة أهدافه الصحية. اجعلها شخصية وإيجابية.`;
 
-    // Call Lovable AI
+    const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
     const aiResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -87,32 +95,23 @@ serve(async (req) => {
     });
 
     if (!aiResponse.ok) {
-      const errorText = await aiResponse.text();
-      console.error('AI API error:', aiResponse.status, errorText);
-      throw new Error(`AI API error: ${aiResponse.status}`);
+      console.error('AI API error:', aiResponse.status);
+      throw new Error('AI service unavailable');
     }
 
     const aiData = await aiResponse.json();
     const message = aiData.choices[0].message.content;
 
-    console.log('Daily check-in message generated successfully');
-
     return new Response(
-      JSON.stringify({ 
-        message,
-        telegram_id: client.telegram_id 
-      }),
+      JSON.stringify({ message, telegram_id: client.telegram_id }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
 
   } catch (error) {
     console.error('Error in daily-checkin:', error);
     return new Response(
-      JSON.stringify({ error: error instanceof Error ? error.message : 'Unknown error' }),
-      { 
-        status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-      }
+      JSON.stringify({ error: 'حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى.' }),
+      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }
 });
