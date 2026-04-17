@@ -1,12 +1,17 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import DashboardLayout from "@/components/DashboardLayout";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
+import { format } from "date-fns";
+import { ar } from "date-fns/locale";
 import {
   Dumbbell, Heart, AlertTriangle, Loader2, Search, ChevronDown, ChevronUp,
-  Activity, Brain, Pill, Zap, Shield, Eye, Bone, Droplets
+  Activity, Brain, Pill, Zap, Shield, Eye, Bone, Droplets,
+  Sparkles, Calendar, Clock, Flame, ListChecks
 } from "lucide-react";
 
 const NUTRIENTS = [
