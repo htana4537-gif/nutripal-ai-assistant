@@ -406,6 +406,102 @@ const NutritionHub = () => {
             </div>
           </div>
         )}
+
+        {/* Meal Plans Tab */}
+        {activeTab === "plans" && (
+          <div className="space-y-6">
+            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+              <div className="relative w-full md:w-72">
+                <Search className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                <Input
+                  placeholder="البحث في الخطط..."
+                  value={planSearch}
+                  onChange={(e) => setPlanSearch(e.target.value)}
+                  className="pr-10 glass border-border/50 bg-muted/30 h-12 rounded-xl"
+                />
+              </div>
+              <Button onClick={() => setShowGenerate(!showGenerate)} className="bg-gradient-primary glow-green gap-2">
+                <Sparkles className="h-4 w-4" />توليد خطة وجبة بالـ AI
+              </Button>
+            </div>
+
+            {showGenerate && (
+              <div className="glass-card p-6 border-primary/30 animate-fade-in">
+                <h3 className="text-lg font-bold text-foreground mb-4 flex items-center gap-2">
+                  <Sparkles className="h-5 w-5 text-primary" />توليد خطة وجبة بالذكاء الاصطناعي
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div>
+                    <label className="block text-xs font-bold text-primary uppercase tracking-widest mb-2">العميل</label>
+                    <select
+                      value={selectedClient}
+                      onChange={(e) => setSelectedClient(e.target.value)}
+                      className="w-full glass border-border/50 rounded-xl p-3 text-foreground"
+                    >
+                      <option value="">اختر عميل...</option>
+                      {clients.map((c) => <option key={c.id} value={c.id}>{c.full_name}</option>)}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-primary uppercase tracking-widest mb-2">نوع الوجبة</label>
+                    <select
+                      value={selectedMealType}
+                      onChange={(e) => setSelectedMealType(e.target.value)}
+                      className="w-full glass border-border/50 rounded-xl p-3 text-foreground"
+                    >
+                      <option value="breakfast">فطور</option>
+                      <option value="lunch">غداء</option>
+                      <option value="dinner">عشاء</option>
+                      <option value="snack">وجبة خفيفة</option>
+                    </select>
+                  </div>
+                  <div className="flex items-end">
+                    <Button onClick={handleGenerateMealPlan} disabled={generating} className="w-full bg-gradient-primary glow-green h-12">
+                      {generating ? <Loader2 className="h-4 w-4 animate-spin ml-2" /> : <Sparkles className="h-4 w-4 ml-2" />}
+                      {generating ? "جارِ التوليد..." : "توليد الخطة"}
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {plansLoading ? (
+              <div className="flex justify-center p-12"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>
+            ) : filteredMealPlans.length === 0 ? (
+              <div className="glass-card p-12 text-center">
+                <Utensils className="mx-auto h-16 w-16 text-muted-foreground/50" />
+                <p className="mt-4 text-muted-foreground">لا توجد خطط</p>
+              </div>
+            ) : (
+              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                {filteredMealPlans.map((plan) => (
+                  <div key={plan.id} className="glass-card p-6 transition-all duration-300 hover:scale-[1.02] hover:glow-green cursor-pointer group">
+                    <div className="flex items-center justify-between mb-4">
+                      <h3 className="font-semibold text-foreground">{plan.client?.full_name}</h3>
+                      <Badge className="glass bg-success/20 text-success">{plan.status === "completed" ? "مكتمل" : "مخطط"}</Badge>
+                    </div>
+                    <p className="text-sm text-muted-foreground flex items-center gap-1 mb-3">
+                      <Calendar className="h-3 w-3" />
+                      {format(new Date(plan.date), "dd MMMM yyyy", { locale: ar })}
+                    </p>
+                    <Badge className="glass mb-3">{getMealTypeLabel(plan.meal_type)}</Badge>
+                    <div className="grid grid-cols-2 gap-2 text-sm">
+                      <div className="glass rounded-lg p-2 text-center">
+                        <Flame className="h-4 w-4 text-secondary mx-auto" />
+                        <span className="gradient-text-yellow font-bold">{plan.total_calories || 0}</span>
+                        <p className="text-xs text-muted-foreground">سعرة</p>
+                      </div>
+                      <div className="glass rounded-lg p-2 text-center">
+                        <span className="gradient-text font-bold">{plan.total_protein || 0}g</span>
+                        <p className="text-xs text-muted-foreground">بروتين</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </DashboardLayout>
   );
