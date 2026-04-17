@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { Users, MessageSquare, Utensils, Dumbbell, TrendingUp, HeadphonesIcon, Sparkles, Bot, Activity, Apple, Heart, UserPlus, ShoppingBag } from "lucide-react";
+import { Utensils, TrendingUp, HeadphonesIcon, Sparkles, Bot, Activity, Apple, Heart, UserPlus, ShoppingBag } from "lucide-react";
 import { NavLink } from "./NavLink";
 
 interface DashboardLayoutProps {
@@ -9,12 +9,8 @@ interface DashboardLayoutProps {
 const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   const navigation = [
     { name: "لوحة التحكم", href: "/", icon: TrendingUp },
-    { name: "العملاء", href: "/clients", icon: Users },
-    { name: "المحادثات", href: "/conversations", icon: MessageSquare },
-    { name: "الخطط الغذائية", href: "/meal-plans", icon: Utensils },
-    { name: "مركز التغذية", href: "/nutrition", icon: Apple },
-    { name: "خطط التمارين", href: "/workouts", icon: Dumbbell },
-    { name: "اللياقة والصحة", href: "/fitness", icon: Heart },
+    { name: "التغذية والوجبات", href: "/nutrition", icon: Apple },
+    { name: "التمارين واللياقة", href: "/fitness", icon: Heart },
     { name: "متابعة التقدم", href: "/progress", icon: Activity },
     { name: "المساعد الذكي", href: "/ai-chat", icon: Bot },
     { name: "متجر المكملات", href: "/store", icon: ShoppingBag },
