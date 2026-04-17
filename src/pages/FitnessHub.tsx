@@ -67,15 +67,88 @@ const SAMPLE_WORKOUTS = [
   },
 ];
 
+interface WorkoutPlan {
+  id: string; client_id: string; date: string; workout_type: string;
+  duration_minutes: number; calories_burned: number; status: string;
+  client?: { full_name: string };
+}
+interface ClientLite { id: string; full_name: string; }
+
 const FitnessHub = () => {
-  const [activeTab, setActiveTab] = useState<"workout" | "health">("workout");
+  const [activeTab, setActiveTab] = useState<"workout" | "plans" | "health">("workout");
   const [activeDayIndex, setActiveDayIndex] = useState(0);
   const [expandedNutrient, setExpandedNutrient] = useState<string | null>(null);
   const [symptomInput, setSymptomInput] = useState("");
   const [analyzing, setAnalyzing] = useState(false);
   const [deficiencies, setDeficiencies] = useState<{ nutrient: string; symptoms: string }[]>([]);
+
+  // Plans state
+  const [workouts, setWorkouts] = useState<WorkoutPlan[]>([]);
+  const [clients, setClients] = useState<ClientLite[]>([]);
+  const [plansLoading, setPlansLoading] = useState(false);
+  const [generating, setGenerating] = useState(false);
+  const [planSearch, setPlanSearch] = useState("");
+  const [showGenerate, setShowGenerate] = useState(false);
+  const [selectedClient, setSelectedClient] = useState("");
+  const [selectedType, setSelectedType] = useState("strength");
+  const [focusArea, setFocusArea] = useState("");
+
   const navigate = useNavigate();
   const { toast } = useToast();
+
+  useEffect(() => {
+    if (activeTab === "plans") {
+      loadWorkouts();
+      loadClients();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeTab]);
+
+  const loadClients = async () => {
+    const { data } = await supabase.from("clients").select("id, full_name");
+    setClients((data as any) || []);
+  };
+
+  const loadWorkouts = async () => {
+    setPlansLoading(true);
+    try {
+      const { data, error } = await supabase
+        .from("workout_plans")
+        .select(`*, client:clients(full_name)`)
+        .order("date", { ascending: false });
+      if (error) throw error;
+      setWorkouts((data as any) || []);
+    } catch {
+      toast({ title: "خطأ", description: "فشل في تحميل التمارين", variant: "destructive" });
+    } finally { setPlansLoading(false); }
+  };
+
+  const handleGenerateWorkout = async () => {
+    if (!selectedClient) {
+      toast({ title: "خطأ", description: "اختر عميل أولاً", variant: "destructive" });
+      return;
+    }
+    setGenerating(true);
+    try {
+      const { error } = await supabase.functions.invoke("generate-workout-plan", {
+        body: { client_id: selectedClient, workout_type: selectedType, focus_area: focusArea, date: new Date().toISOString().split("T")[0] },
+      });
+      if (error) throw error;
+      toast({ title: "تم!", description: "تم إنشاء خطة التمرين بنجاح بالذكاء الاصطناعي" });
+      setShowGenerate(false);
+      loadWorkouts();
+    } catch (err: any) {
+      toast({ title: "خطأ", description: err.message || "فشل في إنشاء خطة التمرين", variant: "destructive" });
+    } finally { setGenerating(false); }
+  };
+
+  const getWorkoutTypeLabel = (type: string) =>
+    (({ cardio: "كارديو", strength: "قوة", flexibility: "مرونة", hiit: "HIIT" } as Record<string, string>)[type]) || type;
+
+  const filteredWorkouts = workouts.filter(
+    (w) => w.client?.full_name?.toLowerCase().includes(planSearch.toLowerCase()) ||
+      w.workout_type.toLowerCase().includes(planSearch.toLowerCase())
+  );
 
   const activeDay = SAMPLE_WORKOUTS[activeDayIndex];
 
