@@ -197,6 +197,13 @@ const FitnessHub = () => {
             }`}
           >
             <Dumbbell className="h-4 w-4" /> التمارين
+          <button
+            onClick={() => setActiveTab("plans")}
+            className={`flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-bold transition-all ${
+              activeTab === "plans" ? "bg-gradient-primary text-primary-foreground glow-green" : "glass border-border/30 text-muted-foreground"
+            }`}
+          >
+            <ListChecks className="h-4 w-4" /> خطط التمارين
           </button>
           <button
             onClick={() => setActiveTab("health")}
