@@ -32,14 +32,85 @@ const CATEGORY_ICONS: Record<string, any> = {
   Grains: Wheat,
 };
 
+interface MealPlan {
+  id: string; client_id: string; date: string; meal_type: string; foods: any;
+  total_calories: number; total_protein: number; total_carbs: number; total_fats: number; status: string;
+  client?: { full_name: string };
+}
+interface ClientLite { id: string; full_name: string; }
+
 const NutritionHub = () => {
-  const [activeTab, setActiveTab] = useState<"database" | "economy" | "shopping">("database");
+  const [activeTab, setActiveTab] = useState<"database" | "economy" | "shopping" | "plans">("database");
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [showAvailableOnly, setShowAvailableOnly] = useState(false);
-  // Local state to track availability overrides
   const [availabilityMap, setAvailabilityMap] = useState<Record<string, boolean>>(
     () => Object.fromEntries(INITIAL_FOODS.map(f => [f.id, f.available]))
+  );
+
+  const { toast } = useToast();
+  const [mealPlans, setMealPlans] = useState<MealPlan[]>([]);
+  const [clients, setClients] = useState<ClientLite[]>([]);
+  const [plansLoading, setPlansLoading] = useState(false);
+  const [generating, setGenerating] = useState(false);
+  const [showGenerate, setShowGenerate] = useState(false);
+  const [selectedClient, setSelectedClient] = useState("");
+  const [selectedMealType, setSelectedMealType] = useState("breakfast");
+  const [planSearch, setPlanSearch] = useState("");
+
+  useEffect(() => {
+    if (activeTab === "plans") {
+      loadMealPlans();
+      loadClients();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeTab]);
+
+  const loadClients = async () => {
+    const { data } = await supabase.from("clients").select("id, full_name");
+    setClients((data as any) || []);
+  };
+
+  const loadMealPlans = async () => {
+    setPlansLoading(true);
+    try {
+      const { data, error } = await supabase
+        .from("meal_plans")
+        .select(`*, client:clients(full_name)`)
+        .order("date", { ascending: false });
+      if (error) throw error;
+      setMealPlans((data as any) || []);
+    } catch {
+      toast({ title: "خطأ", description: "فشل في تحميل خطط الوجبات", variant: "destructive" });
+    } finally { setPlansLoading(false); }
+  };
+
+  const handleGenerateMealPlan = async () => {
+    if (!selectedClient) {
+      toast({ title: "خطأ", description: "اختر عميل أولاً", variant: "destructive" });
+      return;
+    }
+    setGenerating(true);
+    try {
+      const { error } = await supabase.functions.invoke("generate-meal-plan", {
+        body: { client_id: selectedClient, meal_type: selectedMealType, date: new Date().toISOString().split("T")[0] },
+      });
+      if (error) throw error;
+      toast({ title: "تم!", description: "تم إنشاء خطة الوجبة بنجاح بالذكاء الاصطناعي" });
+      setShowGenerate(false);
+      loadMealPlans();
+    } catch (err: any) {
+      toast({ title: "خطأ", description: err.message || "فشل في إنشاء خطة الوجبة", variant: "destructive" });
+    } finally { setGenerating(false); }
+  };
+
+  const getMealTypeLabel = (type: string) =>
+    (({ breakfast: "فطور", lunch: "غداء", dinner: "عشاء", snack: "وجبة خفيفة" } as Record<string, string>)[type]) || type;
+
+  const filteredMealPlans = mealPlans.filter(
+    (plan) =>
+      plan.client?.full_name?.toLowerCase().includes(planSearch.toLowerCase()) ||
+      plan.meal_type.toLowerCase().includes(planSearch.toLowerCase())
   );
 
   const foods = useMemo(() =>
@@ -78,6 +149,7 @@ const NutritionHub = () => {
 
   const tabs = [
     { key: "database", label: "قاعدة الطعام", icon: Search },
+    { key: "plans", label: "خطط الوجبات", icon: Utensils },
     { key: "economy", label: "الاقتصاد الذكي", icon: TrendingDown },
     { key: "shopping", label: "قائمة التسوق", icon: ShoppingCart },
   ];
