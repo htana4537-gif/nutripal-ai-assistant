@@ -1,13 +1,20 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Link } from "react-router-dom";
 import DashboardLayout from "@/components/DashboardLayout";
 import FoodImage from "@/components/FoodImage";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
+import { format } from "date-fns";
+import { ar } from "date-fns/locale";
 import {
-  Search, ShoppingCart, TrendingDown, Heart,
+  Search, ShoppingCart, TrendingDown,
   Apple, Beef, Wheat, Milk, Coffee, Cookie, Leaf,
-  Sparkles, Droplets, Check, ToggleLeft
+  Sparkles, Droplets, Check, ToggleLeft,
+  Utensils, Calendar, Flame, Loader2
 } from "lucide-react";
 import { FOODS as INITIAL_FOODS, FOOD_CATEGORIES, type Food } from "@/data/foods";
 
