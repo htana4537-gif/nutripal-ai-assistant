@@ -58,6 +58,7 @@ const NutritionHub = () => {
   const [selectedClient, setSelectedClient] = useState("");
   const [selectedMealType, setSelectedMealType] = useState("breakfast");
   const [planSearch, setPlanSearch] = useState("");
+  const [selectedPlan, setSelectedPlan] = useState<MealPlan | null>(null);
 
   useEffect(() => {
     if (activeTab === "plans") {
