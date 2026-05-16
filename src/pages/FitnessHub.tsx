@@ -349,7 +349,7 @@ const FitnessHub = () => {
             ) : (
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                 {filteredWorkouts.map((workout) => (
-                  <div key={workout.id} className="glass-card p-6 transition-all duration-300 hover:scale-[1.02] hover:glow-green cursor-pointer group">
+                  <div key={workout.id} onClick={() => setSelectedWorkout(workout)} className="glass-card p-6 transition-all duration-300 hover:scale-[1.02] hover:glow-green cursor-pointer group">
                     <div className="flex items-center justify-between mb-4">
                       <h3 className="font-semibold text-foreground">{workout.client?.full_name}</h3>
                       <Badge className="glass bg-success/20 text-success">{workout.status === "completed" ? "مكتمل" : "مخطط"}</Badge>
