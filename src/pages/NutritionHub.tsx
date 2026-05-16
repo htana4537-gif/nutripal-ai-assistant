@@ -477,7 +477,7 @@ const NutritionHub = () => {
             ) : (
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                 {filteredMealPlans.map((plan) => (
-                  <div key={plan.id} className="glass-card p-6 transition-all duration-300 hover:scale-[1.02] hover:glow-green cursor-pointer group">
+                  <div key={plan.id} onClick={() => setSelectedPlan(plan)} className="glass-card p-6 transition-all duration-300 hover:scale-[1.02] hover:glow-green cursor-pointer group">
                     <div className="flex items-center justify-between mb-4">
                       <h3 className="font-semibold text-foreground">{plan.client?.full_name}</h3>
                       <Badge className="glass bg-success/20 text-success">{plan.status === "completed" ? "مكتمل" : "مخطط"}</Badge>
