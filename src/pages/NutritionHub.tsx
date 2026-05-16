@@ -505,6 +505,69 @@ const NutritionHub = () => {
           </div>
         )}
       </div>
+
+      <Dialog open={!!selectedPlan} onOpenChange={(open) => !open && setSelectedPlan(null)}>
+        <DialogContent className="max-w-2xl max-h-[85vh] overflow-y-auto glass-card" dir="rtl">
+          {selectedPlan && (
+            <>
+              <DialogHeader>
+                <DialogTitle className="text-2xl gradient-text">
+                  {getMealTypeLabel(selectedPlan.meal_type)} — {selectedPlan.client?.full_name}
+                </DialogTitle>
+                <DialogDescription>
+                  {format(new Date(selectedPlan.date), "dd MMMM yyyy", { locale: ar })}
+                </DialogDescription>
+              </DialogHeader>
+              <div className="grid grid-cols-4 gap-2 my-4">
+                <div className="glass rounded-lg p-3 text-center">
+                  <p className="text-xs text-muted-foreground">سعرات</p>
+                  <p className="font-bold gradient-text-yellow">{selectedPlan.total_calories || 0}</p>
+                </div>
+                <div className="glass rounded-lg p-3 text-center">
+                  <p className="text-xs text-muted-foreground">بروتين</p>
+                  <p className="font-bold text-foreground">{selectedPlan.total_protein || 0}g</p>
+                </div>
+                <div className="glass rounded-lg p-3 text-center">
+                  <p className="text-xs text-muted-foreground">كربو</p>
+                  <p className="font-bold text-foreground">{selectedPlan.total_carbs || 0}g</p>
+                </div>
+                <div className="glass rounded-lg p-3 text-center">
+                  <p className="text-xs text-muted-foreground">دهون</p>
+                  <p className="font-bold text-foreground">{selectedPlan.total_fats || 0}g</p>
+                </div>
+              </div>
+              <div>
+                <h4 className="font-bold text-foreground mb-3 flex items-center gap-2">
+                  <Utensils className="h-4 w-4 text-primary" />الأطعمة
+                </h4>
+                <div className="space-y-2">
+                  {Array.isArray(selectedPlan.foods) && selectedPlan.foods.length > 0 ? (
+                    selectedPlan.foods.map((f: any, i: number) => (
+                      <div key={i} className="glass rounded-xl p-3 flex items-center justify-between">
+                        <div>
+                          <p className="font-bold text-foreground">{f.name || f.food_name || `صنف ${i + 1}`}</p>
+                          {f.quantity && <p className="text-xs text-muted-foreground">{f.quantity} {f.unit || ""}</p>}
+                        </div>
+                        {f.calories != null && (
+                          <span className="text-xs text-primary font-bold">{f.calories} سعرة</span>
+                        )}
+                      </div>
+                    ))
+                  ) : (
+                    <p className="text-muted-foreground text-sm">لا توجد أطعمة مفصلة</p>
+                  )}
+                </div>
+              </div>
+              {selectedPlan.notes && (
+                <div className="glass rounded-xl p-4 mt-4">
+                  <p className="text-xs font-bold text-primary mb-1">ملاحظات</p>
+                  <p className="text-sm text-foreground">{selectedPlan.notes}</p>
+                </div>
+              )}
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
     </DashboardLayout>
   );
 };
