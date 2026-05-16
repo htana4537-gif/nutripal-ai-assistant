@@ -34,7 +34,7 @@ const CATEGORY_ICONS: Record<string, any> = {
 };
 
 interface MealPlan {
-  id: string; client_id: string; date: string; meal_type: string; foods: any;
+  id: string; client_id: string; date: string; meal_type: string; foods: any; notes?: string | null;
   total_calories: number; total_protein: number; total_carbs: number; total_fats: number; status: string;
   client?: { full_name: string };
 }
