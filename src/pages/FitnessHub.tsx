@@ -94,6 +94,7 @@ const FitnessHub = () => {
   const [selectedClient, setSelectedClient] = useState("");
   const [selectedType, setSelectedType] = useState("strength");
   const [focusArea, setFocusArea] = useState("");
+  const [selectedWorkout, setSelectedWorkout] = useState<WorkoutPlan | null>(null);
 
   const navigate = useNavigate();
   const { toast } = useToast();
