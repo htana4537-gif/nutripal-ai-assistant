@@ -5,6 +5,7 @@ import DashboardLayout from "@/components/DashboardLayout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
 import { format } from "date-fns";
 import { ar } from "date-fns/locale";
@@ -70,6 +71,7 @@ const SAMPLE_WORKOUTS = [
 interface WorkoutPlan {
   id: string; client_id: string; date: string; workout_type: string;
   duration_minutes: number; calories_burned: number; status: string;
+  exercises?: any; notes?: string | null;
   client?: { full_name: string };
 }
 interface ClientLite { id: string; full_name: string; }
@@ -92,6 +94,7 @@ const FitnessHub = () => {
   const [selectedClient, setSelectedClient] = useState("");
   const [selectedType, setSelectedType] = useState("strength");
   const [focusArea, setFocusArea] = useState("");
+  const [selectedWorkout, setSelectedWorkout] = useState<WorkoutPlan | null>(null);
 
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -346,7 +349,7 @@ const FitnessHub = () => {
             ) : (
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                 {filteredWorkouts.map((workout) => (
-                  <div key={workout.id} className="glass-card p-6 transition-all duration-300 hover:scale-[1.02] hover:glow-green cursor-pointer group">
+                  <div key={workout.id} onClick={() => setSelectedWorkout(workout)} className="glass-card p-6 transition-all duration-300 hover:scale-[1.02] hover:glow-green cursor-pointer group">
                     <div className="flex items-center justify-between mb-4">
                       <h3 className="font-semibold text-foreground">{workout.client?.full_name}</h3>
                       <Badge className="glass bg-success/20 text-success">{workout.status === "completed" ? "مكتمل" : "مخطط"}</Badge>
@@ -476,6 +479,68 @@ const FitnessHub = () => {
           </div>
         )}
       </div>
+
+      <Dialog open={!!selectedWorkout} onOpenChange={(open) => !open && setSelectedWorkout(null)}>
+        <DialogContent className="max-w-2xl max-h-[85vh] overflow-y-auto glass-card" dir="rtl">
+          {selectedWorkout && (
+            <>
+              <DialogHeader>
+                <DialogTitle className="text-2xl gradient-text">
+                  {getWorkoutTypeLabel(selectedWorkout.workout_type)} — {selectedWorkout.client?.full_name}
+                </DialogTitle>
+                <DialogDescription>
+                  {format(new Date(selectedWorkout.date), "dd MMMM yyyy", { locale: ar })}
+                </DialogDescription>
+              </DialogHeader>
+              <div className="grid grid-cols-2 gap-3 my-4">
+                <div className="glass rounded-lg p-3 text-center">
+                  <Clock className="h-4 w-4 text-primary mx-auto" />
+                  <p className="font-bold gradient-text">{selectedWorkout.duration_minutes || 0}</p>
+                  <p className="text-xs text-muted-foreground">دقيقة</p>
+                </div>
+                <div className="glass rounded-lg p-3 text-center">
+                  <Flame className="h-4 w-4 text-secondary mx-auto" />
+                  <p className="font-bold gradient-text-yellow">{selectedWorkout.calories_burned || 0}</p>
+                  <p className="text-xs text-muted-foreground">سعرة</p>
+                </div>
+              </div>
+              <div>
+                <h4 className="font-bold text-foreground mb-3 flex items-center gap-2">
+                  <Dumbbell className="h-4 w-4 text-primary" />التمارين
+                </h4>
+                <div className="space-y-2">
+                  {Array.isArray(selectedWorkout.exercises) && selectedWorkout.exercises.length > 0 ? (
+                    selectedWorkout.exercises.map((ex: any, i: number) => (
+                      <div key={i} className="glass rounded-xl p-3 flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-xs font-bold text-primary border border-primary/30 shrink-0">
+                          {i + 1}
+                        </div>
+                        <div className="flex-1">
+                          <p className="font-bold text-foreground">{ex.name || `تمرين ${i + 1}`}</p>
+                          {(ex.sets || ex.reps) && (
+                            <p className="text-xs text-muted-foreground">
+                              {ex.sets && `${ex.sets} مجموعة`}{ex.sets && ex.reps && " × "}{ex.reps}
+                            </p>
+                          )}
+                          {ex.notes && <p className="text-xs text-muted-foreground mt-1">{ex.notes}</p>}
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <p className="text-muted-foreground text-sm">لا توجد تمارين مفصلة</p>
+                  )}
+                </div>
+              </div>
+              {selectedWorkout.notes && (
+                <div className="glass rounded-xl p-4 mt-4">
+                  <p className="text-xs font-bold text-primary mb-1">ملاحظات</p>
+                  <p className="text-sm text-foreground">{selectedWorkout.notes}</p>
+                </div>
+              )}
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
     </DashboardLayout>
   );
 };
