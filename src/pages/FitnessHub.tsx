@@ -71,6 +71,7 @@ const SAMPLE_WORKOUTS = [
 interface WorkoutPlan {
   id: string; client_id: string; date: string; workout_type: string;
   duration_minutes: number; calories_burned: number; status: string;
+  exercises?: any; notes?: string | null;
   client?: { full_name: string };
 }
 interface ClientLite { id: string; full_name: string; }
